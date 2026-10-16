@@ -1,0 +1,49 @@
+<!--meta {"title": "Contact and quotes | KAB EXPORT", "description": "Request a quote or a sample of organic cardamom, honey or vanilla from Central America. Write to info@kabexport.com."} -->
+<section class="page-hero">
+  <div class="wrap">
+    <div>
+      {{crumbs}}
+      <div class="eyebrow" style="margin-top:18px">Contact</div>
+      <h1>Let's talk about <em>your next order.</em></h1>
+      <p>We answer every request with a quote and sample availability.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap contact-grid">
+    <div>
+      <h2 style="font-size:1.6rem">Write to us</h2>
+      <div class="mail"><a href="mailto:{{email}}">{{email}}</a><button class="copy" type="button" data-copy="{{email}}">Copy</button></div>
+      <h3 style="font-size:1.2rem;margin-top:36px">For a faster quote, include:</h3>
+      <ul class="checklist">
+        <li>Product and format</li>
+        <li>Approximate volume and frequency</li>
+        <li>Destination country and port</li>
+        <li>The organic certification you need</li>
+        <li>Your technical specification, if you have one</li>
+      </ul>
+    </div>
+    <form class="form" action="https://formsubmit.co/{{email}}" method="POST">
+      <input type="hidden" name="_subject" value="New request from kabexport.com (EN)">
+      <input type="hidden" name="_next" value="https://kabexport.com/en/thanks/">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label>Name<input id="f-name" name="name" required autocomplete="name"></label>
+      <label>Company<input id="f-company" name="company" autocomplete="organization"></label>
+      <label>Email<input id="f-email" name="email" type="email" required autocomplete="email"></label>
+      <label>Country<input id="f-country" name="country" autocomplete="country-name"></label>
+      <label class="full">Product
+        <select id="f-product" name="product">
+          <option data-k="cardamomo">Cardamom</option>
+          <option data-k="miel">Honey</option>
+          <option data-k="vainilla">Vanilla</option>
+          <option data-k="varios">Several products</option>
+        </select>
+      </label>
+      <label class="full">Message<textarea id="f-message" name="message" required placeholder="Format, volume, destination…"></textarea></label>
+      <div class="full"><button class="btn btn-honey" type="submit">Send request</button></div>
+      <p class="form-note">We will only use your details to answer your request.</p>
+    </form>
+  </div>
+</section>

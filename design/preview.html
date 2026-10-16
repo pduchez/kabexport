@@ -1,0 +1,477 @@
+<title>KAB EXPORT Preview</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600&display=swap">
+<style>
+/* Layout: logo chooser strip on top, then a full homepage mock — forest-green hero with a honeycomb, product trio, Kaab story, route map, export steps, contact. */
+:root {
+  --forest: #1F3B2D;
+  --forest-2: #2A4C3A;
+  --honey: #D4922A;
+  --honey-soft: #E9B866;
+  --sage: #8FA36B;
+  --vanilla: #F6EFDF;
+  --bg: #F3EEE1;
+  --surface: #FBF8F0;
+  --fg: #1A2620;
+  --muted: #56645A;
+  --line: #D9D2BF;
+  --chip: #EADFC4;
+  --on-forest: #F6EFDF;
+  --display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --body: "Hanken Grotesk", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --forest: #17301F; --forest-2: #21402D; --honey: #E0A040; --honey-soft: #EDC27A;
+    --sage: #A3B67F; --bg: #0F1813; --surface: #16221B; --fg: #EDE6D3; --muted: #A4AE9F;
+    --line: #2C3B31; --chip: #2A3426; --on-forest: #F6EFDF; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --forest: #17301F; --forest-2: #21402D; --honey: #E0A040; --honey-soft: #EDC27A;
+  --sage: #A3B67F; --bg: #0F1813; --surface: #16221B; --fg: #EDE6D3; --muted: #A4AE9F;
+  --line: #2C3B31; --chip: #2A3426; --on-forest: #F6EFDF; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 17px; line-height: 1.6; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.12; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+p { margin: 0; }
+a { color: inherit; }
+button, input, textarea, select { font: inherit; }
+:focus-visible { outline: 3px solid var(--honey); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: 1160px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.eyebrow { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--honey); }
+.tbc { display: inline-block; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 1px 7px; border-radius: 99px; background: var(--chip); color: var(--muted); vertical-align: middle; white-space: nowrap; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 99px; border: 1.5px solid transparent; font-weight: 600; text-decoration: none; cursor: pointer; transition: transform .15s ease, background .15s ease; }
+.btn:hover { transform: translateY(-1px); }
+.btn-honey { background: var(--honey); color: #1A2620; }
+.btn-ghost { border-color: color-mix(in srgb, var(--on-forest) 45%, transparent); color: var(--on-forest); background: transparent; }
+
+/* ---------- Logo lockups ---------- */
+.lockup { display: inline-flex; align-items: center; gap: 12px; color: inherit; }
+.lockup .mark { width: 46px; height: 46px; flex: none; }
+.lk-text { display: flex; flex-direction: column; line-height: 1; }
+.lk-text b { font-family: var(--display); font-weight: 700; font-size: 1.7rem; letter-spacing: 0.05em; }
+.lk-text small, .lk-c small { font-size: 0.66rem; font-weight: 600; letter-spacing: 0.42em; margin-top: 5px; }
+.lk-c { flex-direction: column; align-items: flex-start; gap: 0; line-height: 1; }
+.wm { font-family: var(--display); font-weight: 700; font-size: 2.1rem; letter-spacing: 0.04em; display: inline-flex; align-items: baseline; }
+.wm-a { height: 0.72em; width: auto; margin: 0 0.04em; overflow: visible; }
+
+/* ---------- Chooser ---------- */
+.chooser { padding-block: 40px 56px; border-bottom: 1px solid var(--line); }
+.chooser-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px 32px; margin-bottom: 28px; }
+.chooser-head h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+.chooser-head p { color: var(--muted); max-width: 52ch; }
+.logos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.logo-card { background: var(--surface); border: 1.5px solid var(--line); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; transition: border-color .2s; }
+.logo-card[aria-current="true"] { border-color: var(--honey); box-shadow: 0 0 0 3px color-mix(in srgb, var(--honey) 22%, transparent); }
+.tiles { display: grid; grid-template-columns: 1fr 1fr; }
+.tile { aspect-ratio: 4 / 3; display: grid; place-items: center; padding: 12px; max-width: 100%; }
+.tile.light { background: var(--vanilla); color: #1F3B2D; }
+.tile.dark { background: #1F3B2D; color: #F6EFDF; }
+.tile .lockup { transform: scale(.82); }
+.logo-info { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.logo-info h3 { font-size: 1.2rem; }
+.logo-info p { color: var(--muted); font-size: 0.95rem; flex: 1; }
+.pick { align-self: flex-start; margin-top: 6px; padding: 9px 18px; border-radius: 99px; border: 1.5px solid var(--fg); background: transparent; color: var(--fg); font-weight: 600; cursor: pointer; }
+.logo-card[aria-current="true"] .pick { background: var(--honey); border-color: var(--honey); color: #1A2620; }
+
+.mock-label { padding-block: 28px 14px; display: flex; align-items: center; gap: 14px; color: var(--muted); font-size: 0.85rem; }
+.mock-label::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+/* ---------- Header + hero ---------- */
+.hero { background: var(--forest); color: var(--on-forest); position: relative; overflow: hidden; }
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 22px; }
+.nav ul { list-style: none; display: flex; gap: 26px; margin: 0; padding: 0; font-size: 0.95rem; }
+.nav ul a { text-decoration: none; opacity: .85; }
+.nav ul a:hover { opacity: 1; color: var(--honey-soft); }
+.lang { font-size: 0.85rem; font-weight: 600; letter-spacing: .08em; }
+.lang span { opacity: .45; }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 40px; align-items: center; padding-block: 40px 72px; }
+.hero h1 { font-size: clamp(2.4rem, 5.4vw, 4.4rem); font-weight: 600; }
+.hero h1 em { font-style: italic; font-weight: 400; color: var(--honey-soft); }
+.hero-lede { margin-top: 22px; font-size: 1.12rem; max-width: 46ch; opacity: .9; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.hero-facts { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 40px; padding-top: 22px; border-top: 1px solid color-mix(in srgb, var(--on-forest) 18%, transparent); font-size: 0.9rem; opacity: .85; }
+.hero-facts b { color: var(--honey-soft); font-weight: 600; }
+.comb { width: 100%; max-width: 460px; justify-self: center; }
+.comb .cell { stroke: color-mix(in srgb, var(--on-forest) 30%, transparent); stroke-width: 1.5; fill: transparent; }
+.comb .cell.h { stroke: none; animation: fill 1.6s ease both; }
+@keyframes fill { from { opacity: .25; } }
+
+/* ---------- Sections ---------- */
+section.block { padding-block: 88px; }
+.sec-head { max-width: 640px; margin-bottom: 44px; display: flex; flex-direction: column; gap: 12px; }
+.sec-head h2 { font-size: clamp(1.9rem, 3.6vw, 2.8rem); }
+.sec-head p { color: var(--muted); font-size: 1.08rem; }
+
+.products { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.prod { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 14px; }
+.prod svg { width: 64px; height: 64px; color: var(--forest-2); }
+.prod h3 { font-size: 1.55rem; }
+.prod .latin { font-family: var(--display); font-style: italic; color: var(--muted); font-size: 0.95rem; margin-top: -8px; }
+.prod p { color: var(--muted); }
+.specs { list-style: none; margin: 4px 0 0; padding: 14px 0 0; border-top: 1px solid var(--line); display: grid; gap: 8px; font-size: 0.92rem; }
+.specs li { display: grid; grid-template-columns: 7.5em minmax(0, 1fr); gap: 10px; }
+.specs span:first-child { color: var(--muted); }
+.prod .more { margin-top: auto; padding-top: 8px; font-weight: 600; color: var(--honey); text-decoration: none; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .prod svg { color: var(--sage); } }
+:root[data-theme="dark"] .prod svg { color: var(--sage); }
+
+.story { background: var(--forest); color: var(--on-forest); }
+.story-grid { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 56px; align-items: center; }
+.glyph { font-family: var(--display); font-size: clamp(5rem, 13vw, 10rem); font-weight: 400; font-style: italic; line-height: .9; color: var(--honey-soft); }
+.glyph-sub { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 10px; }
+.glyph-sub span { border: 1px solid color-mix(in srgb, var(--on-forest) 30%, transparent); padding: 4px 14px; border-radius: 99px; font-size: 0.9rem; }
+.story h2 { font-size: clamp(1.8rem, 3.4vw, 2.6rem); }
+.story p { margin-top: 18px; opacity: .88; max-width: 58ch; }
+.chain { margin-top: 30px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.chain div { border-top: 2px solid var(--honey); padding-top: 12px; font-size: 0.93rem; opacity: .9; }
+.chain b { display: block; font-family: var(--display); font-size: 1.1rem; font-weight: 600; margin-bottom: 4px; opacity: 1; }
+
+.map-box { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 20px; overflow-x: auto; }
+.map-box svg { width: 100%; min-width: 560px; height: auto; display: block; }
+.map-box .lbl { fill: var(--fg); font-family: var(--body); font-size: 13px; font-weight: 600; }
+.map-box .lbl-s { fill: var(--muted); font-family: var(--body); font-size: 11px; }
+.map-box .route { fill: none; stroke: var(--honey); stroke-width: 2; stroke-dasharray: 2 7; stroke-linecap: round; }
+.map-box .dotgrid { fill: var(--line); }
+.markets { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.markets span { background: var(--chip); padding: 6px 14px; border-radius: 99px; font-size: 0.9rem; font-weight: 500; }
+@media (prefers-reduced-motion: reduce) { .pulse { display: none; } .comb .cell.h { animation: none; } .btn:hover { transform: none; } }
+
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px; counter-reset: s; }
+.steps li { counter-increment: s; display: flex; flex-direction: column; gap: 8px; padding-top: 16px; border-top: 1px solid var(--line); }
+.steps li::before { content: counter(s, decimal-leading-zero); font-family: var(--display); font-size: 1.9rem; color: var(--honey); line-height: 1; }
+.steps b { font-size: 1.05rem; }
+.steps span { color: var(--muted); font-size: 0.93rem; }
+
+.quality { margin-top: 56px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 32px; padding: 32px; border-radius: 16px; background: var(--chip); align-items: center; }
+.quality h3 { font-size: 1.5rem; }
+.badges { display: flex; flex-wrap: wrap; gap: 12px; }
+.badge { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; display: flex; flex-direction: column; gap: 4px; font-weight: 600; font-size: 0.95rem; }
+
+.contact-grid { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 48px; }
+.mail { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 24px; }
+.mail code { font-family: var(--display); font-size: 1.5rem; user-select: all; }
+.copy { padding: 7px 14px; border-radius: 99px; border: 1.5px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer; font-weight: 600; font-size: 0.85rem; }
+form { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+form label { display: flex; flex-direction: column; gap: 6px; font-size: 0.88rem; font-weight: 600; min-width: 0; }
+form .full { grid-column: 1 / -1; }
+input, select, textarea { padding: 11px 13px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--bg); color: var(--fg); font-weight: 400; width: 100%; }
+textarea { min-height: 110px; resize: vertical; }
+.form-note { grid-column: 1 / -1; font-size: 0.88rem; color: var(--muted); }
+
+footer { background: var(--forest); color: var(--on-forest); padding-block: 48px; }
+.foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; align-items: center; font-size: 0.9rem; }
+.foot p { opacity: .75; }
+
+@media (max-width: 900px) {
+  .logos, .products { grid-template-columns: 1fr; }
+  .hero-grid, .story-grid, .contact-grid, .quality { grid-template-columns: 1fr; }
+  .comb { max-width: 320px; }
+  .nav ul { display: none; }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .chain { grid-template-columns: 1fr; }
+  section.block { padding-block: 64px; }
+}
+@media (max-width: 520px) {
+  form { grid-template-columns: 1fr; padding: 20px; }
+  .steps { grid-template-columns: 1fr; }
+  .tile .lockup { transform: scale(.66); }
+}
+</style>
+
+<!-- ============ Chooser ============ -->
+<div class="wrap chooser">
+  <div class="chooser-head">
+    <div>
+      <div class="eyebrow">Vista previa · paso 1</div>
+      <h2>Elige el logo de KAB EXPORT</h2>
+    </div>
+    <p>Cada logo se muestra sobre fondo claro y oscuro. Al elegir uno, la página de inicio de abajo lo usa. Los datos marcados <span class="tbc">por confirmar</span> son ejemplos que debes validar.</p>
+  </div>
+  <div class="logos" id="logos"></div>
+</div>
+
+<div class="wrap mock-label">Vista previa · paso 2 — Página de inicio de kabexport.com</div>
+
+<!-- ============ Homepage mock ============ -->
+<header class="hero">
+  <div class="wrap">
+    <nav class="nav" aria-label="Principal">
+      <a href="#inicio" class="brand" id="brand" aria-label="KAB EXPORT, inicio" style="text-decoration:none"></a>
+      <ul>
+        <li><a href="#productos">Productos</a></li>
+        <li><a href="#kaab">Nosotros</a></li>
+        <li><a href="#mercados">Mercados</a></li>
+        <li><a href="#exportacion">Exportación</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+      <div class="lang" title="La versión en inglés llega en la siguiente entrega">ES · <span>EN</span></div>
+    </nav>
+    <div class="hero-grid" id="inicio">
+      <div>
+        <div class="eyebrow">Cardamomo · Miel · Vainilla — orgánicos</div>
+        <h1 style="margin-top:16px">Del corazón de Centroamérica, <em>orgánico por naturaleza.</em></h1>
+        <p class="hero-lede">Exportamos cardamomo, miel y vainilla orgánicos cultivados en los bosques de Centroamérica, con trazabilidad desde la finca hasta el puerto de destino.</p>
+        <div class="hero-cta">
+          <a class="btn btn-honey" href="#contacto">Solicitar cotización</a>
+          <a class="btn btn-ghost" href="#productos">Ver productos</a>
+        </div>
+        <div class="hero-facts">
+          <span><b>Origen:</b> Centroamérica</span>
+          <span><b>Destinos:</b> Alemania · España · EE. UU. · México</span>
+        </div>
+      </div>
+      <svg class="comb" id="comb" viewBox="0 0 420 420" role="img" aria-label="Panal de abejas con celdas llenas de miel y una ruta que sale hacia el mundo"></svg>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="block" id="productos">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Nuestro portafolio</div>
+        <h2>Tres productos del mismo bosque</h2>
+        <p>Cultivados sin agroquímicos de síntesis, cosechados a mano y preparados para los mercados más exigentes.</p>
+      </div>
+      <div class="products">
+        <article class="prod">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M14 46C10 30 24 12 44 12c4 16-10 36-30 34Z" fill="color-mix(in srgb, currentColor 14%, transparent)"/><path d="M18 42 40 16M22 38c2-6 8-14 14-18M26 42c6-4 12-12 14-20"/><path d="M44 12c2-3 5-5 8-6"/></g></svg>
+          <h3>Cardamomo verde</h3>
+          <div class="latin">Elettaria cardamomum</div>
+          <p>Crece bajo la sombra del bosque húmedo de montaña. Vainas enteras de verde intenso, secadas con cuidado para conservar sus aceites esenciales.</p>
+          <ul class="specs">
+            <li><span>Presentación</span><span>Vaina entera, semilla, molido <span class="tbc">por confirmar</span></span></li>
+            <li><span>Calibres</span><span>7 mm, 8 mm y superiores <span class="tbc">por confirmar</span></span></li>
+          </ul>
+          <a class="more" href="#contacto">Solicitar muestra →</a>
+        </article>
+        <article class="prod">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"><path d="M32 6 52 17.5v23L32 52 12 40.5v-23Z"/><path d="M32 18 42 23.8v11.5L32 41l-10-5.7V23.8Z" fill="var(--honey)" stroke="none"/><path d="M32 52v4a3 3 0 0 0 6 0v-7.5"/></g></svg>
+          <h3>Miel orgánica</h3>
+          <div class="latin">Apis mellifera · floración silvestre</div>
+          <p>Miel cruda de floraciones silvestres, de apiarios ubicados lejos de cultivos convencionales. Sin calentar y sin mezclas.</p>
+          <ul class="specs">
+            <li><span>Presentación</span><span>Tambor, IBC o frasco <span class="tbc">por confirmar</span></span></li>
+            <li><span>Tipos</span><span>Multifloral y monofloral <span class="tbc">por confirmar</span></span></li>
+          </ul>
+          <a class="more" href="#contacto">Solicitar muestra →</a>
+        </article>
+        <article class="prod">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 56C24 44 36 30 46 14"/><path d="M17 56C29 44 40 31 49 16"/><g transform="translate(48 13)" fill="color-mix(in srgb, currentColor 14%, transparent)"><ellipse rx="4" ry="9" transform="rotate(-20)"/><ellipse rx="4" ry="9" transform="rotate(50)"/><ellipse rx="4" ry="9" transform="rotate(120)"/></g></g><circle cx="48" cy="13" r="2.6" fill="var(--honey)"/></svg>
+          <h3>Vainilla</h3>
+          <div class="latin">Vanilla planifolia</div>
+          <p>La orquídea nativa de Mesoamérica. Vainas curadas lentamente durante meses, hasta desarrollar un aroma profundo y dulce.</p>
+          <ul class="specs">
+            <li><span>Grados</span><span>Gourmet (A) y extracción (B) <span class="tbc">por confirmar</span></span></li>
+            <li><span>Longitud</span><span>14–20 cm <span class="tbc">por confirmar</span></span></li>
+          </ul>
+          <a class="more" href="#contacto">Solicitar muestra →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block story" id="kaab">
+    <div class="wrap story-grid">
+      <div>
+        <div class="glyph">Kaab</div>
+        <div class="glyph-sub"><span>abeja</span><span>miel</span><span>tierra</span></div>
+      </div>
+      <div>
+        <div class="eyebrow">Nuestro nombre</div>
+        <h2 style="margin-top:12px">En maya, la palabra para miel también nombra a la tierra.</h2>
+        <p>Por eso nos llamamos KAB. Trabajamos con lo que da la tierra centroamericana y lo llevamos al mundo con el mismo cuidado con que se cultiva. Nuestros tres productos comparten un ecosistema: el bosque que da sombra al cardamomo es el mismo donde las abejas buscan néctar y donde florece la orquídea de la vainilla.</p>
+        <div class="chain">
+          <div><b>La abeja</b>Produce la miel y poliniza el bosque que sostiene a los demás cultivos.</div>
+          <div><b>La orquídea</b>La vainilla es nativa de Mesoamérica. Aquí empezó su historia.</div>
+          <div><b>La sombra</b>El cardamomo crece bajo los árboles, sin talar el bosque.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="mercados">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Mercados</div>
+        <h2>De Centroamérica a Europa y Norteamérica</h2>
+        <p>Atendemos importadores, distribuidores y la industria alimentaria en Alemania, España, Estados Unidos, México y la región centroamericana.</p>
+      </div>
+      <div class="map-box">
+        <svg id="map" viewBox="0 0 800 300" role="img" aria-label="Esquema de rutas de exportación desde Centroamérica hacia México, Estados Unidos, España y Alemania"></svg>
+      </div>
+      <div class="markets"><span>Alemania</span><span>España</span><span>Estados Unidos</span><span>México</span><span>Centroamérica</span></div>
+    </div>
+  </section>
+
+  <section class="block" id="exportacion" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Cómo trabajamos</div>
+        <h2>De la muestra al contenedor</h2>
+        <p>Un proceso claro para que cada comprador sepa en qué etapa está su pedido.</p>
+      </div>
+      <ol class="steps">
+        <li><b>Muestra</b><span>Enviamos muestras del lote con su ficha técnica.</span></li>
+        <li><b>Cotización y contrato</b><span>Precio, volumen, Incoterm (FOB, CIF u otro) y fecha de embarque.</span></li>
+        <li><b>Preparación</b><span>Selección, limpieza, empaque y control de calidad por lote.</span></li>
+        <li><b>Documentación</b><span>Certificado orgánico, fitosanitario, de origen y análisis de laboratorio.</span></li>
+        <li><b>Embarque</b><span>Seguimiento del contenedor hasta el puerto de destino.</span></li>
+      </ol>
+      <div class="quality">
+        <div>
+          <div class="eyebrow">Calidad</div>
+          <h3 style="margin-top:8px">Certificación orgánica para cada mercado</h3>
+        </div>
+        <div class="badges">
+          <div class="badge">USDA Organic · EE. UU. <span class="tbc">por confirmar</span></div>
+          <div class="badge">Orgánico UE · Alemania y España <span class="tbc">por confirmar</span></div>
+          <div class="badge">Trazabilidad por lote <span class="tbc">por confirmar</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="contacto" style="padding-top:0">
+    <div class="wrap contact-grid">
+      <div>
+        <div class="eyebrow">Contacto</div>
+        <h2 style="font-size:clamp(1.9rem,3.6vw,2.8rem);margin-top:12px">Hablemos de tu próximo pedido</h2>
+        <p style="margin-top:16px;color:var(--muted)">Cuéntanos qué producto, qué volumen y a qué destino. Respondemos con cotización y disponibilidad de muestras.</p>
+        <div class="mail"><code>info@kabexport.com</code><button class="copy" id="copy" type="button">Copiar</button></div>
+      </div>
+      <form id="form">
+        <label>Nombre<input id="f-name" required placeholder="Ana Müller"></label>
+        <label>Empresa<input id="f-co" placeholder="Bio Gewürze GmbH"></label>
+        <label>Correo<input id="f-mail" type="email" required placeholder="ana@empresa.com"></label>
+        <label>Producto<select id="f-prod"><option>Cardamomo</option><option>Miel</option><option>Vainilla</option><option>Varios</option></select></label>
+        <label class="full">Mensaje<textarea id="f-msg" placeholder="Volumen aproximado, destino, presentación…"></textarea></label>
+        <div class="full"><button class="btn btn-honey" type="submit" style="border:0">Enviar solicitud</button></div>
+        <p class="form-note" id="form-note" hidden>Esto es una vista previa: en el sitio publicado, el formulario enviará el mensaje a info@kabexport.com.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span id="foot-brand"></span>
+    <p>Cardamomo, miel y vainilla orgánicos de Centroamérica · info@kabexport.com</p>
+    <p>© 2026 KAB EXPORT</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var NS = 'http://www.w3.org/2000/svg';
+  function hex(cx, cy, r) {
+    var p = [];
+    for (var i = 0; i < 6; i++) { var a = Math.PI / 180 * (60 * i - 90); p.push((cx + r * Math.cos(a)).toFixed(1) + ',' + (cy + r * Math.sin(a)).toFixed(1)); }
+    return p.join(' ');
+  }
+
+  // ---- Logo marks ----
+  var marks = {
+    a: '<svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6 54.5 19v26L32 58 9.5 45V19Z" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round"/><path d="M24 19v26M24 33 37 20" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M28.5 28.5 40 41q5 5 15 4" fill="none" stroke="var(--honey)" stroke-width="4" stroke-linecap="round"/><circle cx="59" cy="45" r="3" fill="var(--honey)"/></svg>',
+    b: '<svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"><polygon points="' + hex(15, 27, 9) + '"/><polygon points="' + hex(49, 27, 9) + '"/></g><polygon points="32,20 41,28 41,46 32,57 23,46 23,28" fill="var(--honey)"/><path d="M23 35h18M23 42h18" stroke="currentColor" stroke-width="3.5"/><circle cx="32" cy="14" r="4.5" fill="currentColor"/><path d="M29.5 10.5V6.5H25.5V3M34.5 10.5V6.5h4V3" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="miter"/></svg>',
+    c: '<span class="wm"><span>K</span><svg class="wm-a" viewBox="0 0 40 56" aria-hidden="true"><path d="M4 55 20 4l16 51" fill="none" stroke="currentColor" stroke-width="7.5" stroke-linejoin="miter"/><path d="M8.5 37q11.5-9 23 0q-11.5 9-23 0Z" fill="var(--honey)"/></svg><span>B</span></span>'
+  };
+  function lockup(k) {
+    if (k === 'c') return '<span class="lockup lk-c">' + marks.c + '<small>EXPORT</small></span>';
+    return '<span class="lockup">' + marks[k] + '<span class="lk-text"><b>KAB</b><small>EXPORT</small></span></span>';
+  }
+  var info = {
+    a: ['A · Panal y ruta', 'Una K dentro de una celda de panal. Su trazo sale de la celda como una ruta de exportación. Es la opción más corporativa.'],
+    b: ['B · Abeja geométrica', 'Una abeja con alas de panal y antenas en forma de greca escalonada, inspirada en los textiles de la región. Es la opción más artesanal.'],
+    c: ['C · Logotipo gourmet', 'Solo letras. La barra de la A es una vaina de cardamomo color miel. Es la opción más elegante y minimalista.']
+  };
+  var logos = document.getElementById('logos');
+  ['a', 'b', 'c'].forEach(function (k) {
+    var card = document.createElement('article');
+    card.className = 'logo-card'; card.dataset.k = k;
+    card.innerHTML = '<div class="tiles"><div class="tile light">' + lockup(k) + '</div><div class="tile dark">' + lockup(k) + '</div></div>' +
+      '<div class="logo-info"><h3>' + info[k][0] + '</h3><p>' + info[k][1] + '</p><button class="pick" type="button" id="pick-' + k + '">Elegir este</button></div>';
+    logos.appendChild(card);
+  });
+  function choose(k) {
+    document.querySelectorAll('.logo-card').forEach(function (c) {
+      var on = c.dataset.k === k;
+      c.setAttribute('aria-current', on ? 'true' : 'false');
+      c.querySelector('.pick').textContent = on ? 'Elegido ✓' : 'Elegir este';
+    });
+    document.getElementById('brand').innerHTML = lockup(k);
+    document.getElementById('foot-brand').innerHTML = lockup(k);
+    try { localStorage.setItem('kab-logo', k); } catch (e) {}
+  }
+  logos.addEventListener('click', function (e) {
+    var b = e.target.closest('.pick'); if (b) choose(b.closest('.logo-card').dataset.k);
+  });
+  var saved = 'a';
+  try { saved = localStorage.getItem('kab-logo') || 'a'; } catch (e) {}
+  choose(saved);
+
+  // ---- Hero honeycomb ----
+  var comb = document.getElementById('comb'), r = 34, w = Math.sqrt(3) * r, n = 0;
+  var fills = { '2,2': 1, '3,2': .85, '2,3': .7, '3,3': 1, '1,3': .45, '2,4': .9, '3,4': .6, '4,3': .5, '1,2': .3, '2,1': .55, '4,4': .35 };
+  for (var row = 0; row < 8; row++) {
+    for (var col = 0; col < 7; col++) {
+      var cx = 30 + col * w + (row % 2 ? w / 2 : 0), cy = 30 + row * r * 1.5;
+      if (Math.hypot(cx - 210, cy - 215) > 180) continue;
+      var p = document.createElementNS(NS, 'polygon');
+      p.setAttribute('points', hex(cx, cy, r - 3));
+      var f = fills[col + ',' + row];
+      p.setAttribute('class', f ? 'cell h' : 'cell');
+      if (f) { p.setAttribute('fill', 'var(--honey)'); p.setAttribute('fill-opacity', f); p.style.animationDelay = (n++ * 0.12) + 's'; }
+      comb.appendChild(p);
+    }
+  }
+  var route = document.createElementNS(NS, 'path');
+  route.setAttribute('d', 'M232 200 C 300 160, 340 110, 400 40');
+  route.setAttribute('fill', 'none'); route.setAttribute('stroke', 'var(--on-forest)'); route.setAttribute('stroke-width', '2');
+  route.setAttribute('stroke-dasharray', '2 8'); route.setAttribute('stroke-linecap', 'round');
+  comb.appendChild(route);
+  var tip = document.createElementNS(NS, 'circle');
+  tip.setAttribute('cx', 400); tip.setAttribute('cy', 40); tip.setAttribute('r', 6); tip.setAttribute('fill', 'var(--honey-soft)');
+  comb.appendChild(tip);
+
+  // ---- Route map (equirectangular, lon -130..30, lat 60..0) ----
+  var map = document.getElementById('map');
+  function xy(lat, lon) { return [(lon + 130) / 160 * 800, (60 - lat) / 60 * 300]; }
+  var html = '<defs><pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.3" class="dotgrid"/></pattern></defs><rect width="800" height="300" fill="url(#dots)" opacity=".7"/>';
+  var o = xy(14.5, -88);
+  var dests = [
+    { n: 'México', lat: 19.4, lon: -99.1, lift: 30, dx: -12, anchor: 'end' },
+    { n: 'Estados Unidos', lat: 36, lon: -95, lift: 50, dx: -12, anchor: 'end' },
+    { n: 'España', lat: 40.4, lon: -3.7, lift: 120, dx: 0, anchor: 'middle', dy: 26 },
+    { n: 'Alemania', lat: 51.2, lon: 10.4, lift: 150, dx: 0, anchor: 'middle', dy: -14 }
+  ];
+  dests.forEach(function (d, i) {
+    var t = xy(d.lat, d.lon), mx = (o[0] + t[0]) / 2, my = Math.min(o[1], t[1]) - d.lift;
+    var path = 'M' + o[0] + ' ' + o[1] + ' Q' + mx + ' ' + my + ' ' + t[0] + ' ' + t[1];
+    html += '<path class="route" d="' + path + '"/>';
+    html += '<circle class="pulse" r="3.5" fill="var(--honey)"><animateMotion dur="' + (4 + i) + 's" repeatCount="indefinite" path="' + path + '"/></circle>';
+    html += '<circle cx="' + t[0] + '" cy="' + t[1] + '" r="5" fill="var(--fg)"/>';
+    html += '<text class="lbl" x="' + (t[0] + d.dx) + '" y="' + (t[1] + (d.dy || 4)) + '" text-anchor="' + d.anchor + '">' + d.n + '</text>';
+  });
+  html += '<circle cx="' + o[0] + '" cy="' + o[1] + '" r="11" fill="var(--honey)" opacity=".25"/><circle cx="' + o[0] + '" cy="' + o[1] + '" r="6" fill="var(--honey)"/>';
+  html += '<text class="lbl" x="' + (o[0] + 14) + '" y="' + (o[1] + 22) + '">Centroamérica</text><text class="lbl-s" x="' + (o[0] + 14) + '" y="' + (o[1] + 37) + '">Origen</text>';
+  html += '<text class="lbl-s" x="790" y="290" text-anchor="end">Esquema, no a escala</text>';
+  map.innerHTML = html;
+
+  // ---- Contact ----
+  document.getElementById('copy').addEventListener('click', function () {
+    var b = this;
+    function done(t) { b.textContent = t; setTimeout(function () { b.textContent = 'Copiar'; }, 1800); }
+    if (navigator.clipboard) navigator.clipboard.writeText('info@kabexport.com').then(function () { done('Copiado'); }, function () { done('Selecciona el texto'); });
+    else done('Selecciona el texto');
+  });
+  document.getElementById('form').addEventListener('submit', function (e) {
+    e.preventDefault(); document.getElementById('form-note').hidden = false;
+  });
+})();
+</script>
