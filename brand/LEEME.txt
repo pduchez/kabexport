@@ -1,0 +1,33 @@
+LOGO KAB EXPORT
+===============
+
+ARCHIVOS
+- kab-export-logo-color.svg / .png ...... Logo principal. Para fondos claros.
+- kab-export-logo-blanco.svg / .png ..... Logo en crema. Para fondos oscuros o fotos.
+- kab-export-logo-negro.svg / .png ...... Una sola tinta. Para sellos, fax o grabado.
+- kab-export-logo-fondo-verde.png ....... Logo listo sobre el verde de la marca.
+- kab-export-logo-fondo-crema.png ....... Logo listo sobre el crema de la marca.
+- kab-export-icono-*.svg / .png ......... Solo el símbolo (panal con la K).
+- kab-export-perfil-redes.png ........... Foto de perfil para WhatsApp, LinkedIn, Instagram.
+
+Los .svg son vectoriales: se pueden ampliar sin perder calidad.
+Úsalos para imprenta, letreros y diseño. El texto ya está en curvas,
+así que no necesitas instalar las tipografías.
+Los .png tienen fondo transparente (salvo los "fondo" y "perfil").
+
+COLORES
+- Verde selva ...... #1F3B2D   RGB 31 59 45
+- Ámbar miel ....... #D4922A   RGB 212 146 42
+- Crema vainilla ... #F6EFDF   RGB 246 239 223
+- Miel claro ....... #E9B866   (acento sobre fondos oscuros)
+- Verde cardamomo .. #8FA36B   (detalles)
+
+TIPOGRAFÍAS (gratuitas, Google Fonts)
+- Fraunces, Bold: "KAB" y títulos.
+- Hanken Grotesk, SemiBold: "EXPORT" y textos.
+
+USO
+- Deja alrededor del logo un espacio libre al menos igual a la altura de la letra "E" de EXPORT.
+- No lo deformes, no cambies sus colores y no le agregues sombras.
+- El logo completo no debería verse a menos de 3 cm de ancho impreso
+  ni a menos de 120 px en pantalla. Por debajo de eso, usa solo el icono.
