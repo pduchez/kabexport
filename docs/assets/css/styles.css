@@ -348,6 +348,12 @@ td:first-child { font-weight: 600; white-space: nowrap; }
   .orbit { max-width: 360px; margin-top: 12px; }
   .hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .hero { min-height: auto; }
+  /* En pantalla angosta el rombo va justo después del texto y antes de los botones */
+  .hero .hero-grid { display: flex; flex-direction: column; gap: 0; }
+  .hero-copy { display: contents; }
+  .hero .eyebrow { order: 1; } .hero h1 { order: 2; } .hero-lede { order: 3; }
+  .hero .orbit { order: 4; margin: 30px auto 8px; }
+  .hero .hero-cta { order: 5; } .hero-stats { order: 6; }
 }
 @media (max-width: 520px) { .orb span { font-size: .72rem; } .orbit { max-width: 320px; } }
 @media (prefers-reduced-motion: reduce) {
