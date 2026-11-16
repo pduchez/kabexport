@@ -11,6 +11,8 @@ página, y escribe el resultado en docs/ (la carpeta que se publica), junto
 con sitemap.xml.
 
 Uso:  python3 tools/build.py
+
+El inglés va en la raíz (/) y el español en /es/.
 """
 import json
 import re
@@ -23,63 +25,91 @@ OUT = ROOT / "docs"
 DOMAIN = "https://kabexport.com"
 EMAIL = "info@kabexport.com"
 
+# El inglés es el idioma principal: vive en la raíz. El español vive en /es/.
 # clave: (ruta en español, ruta en inglés)
 PAGES = {
-    "home": ("/", "/en/"),
-    "products": ("/productos/", "/en/products/"),
-    "cardamom": ("/productos/cardamomo/", "/en/products/cardamom/"),
-    "honey": ("/productos/miel/", "/en/products/honey/"),
-    "vanilla": ("/productos/vainilla/", "/en/products/vanilla/"),
-    "about": ("/nosotros/", "/en/about/"),
-    "sustainability": ("/sostenibilidad/", "/en/sustainability/"),
-    "quality": ("/calidad/", "/en/quality/"),
-    "export": ("/exportacion/", "/en/export/"),
-    "contact": ("/contacto/", "/en/contact/"),
-    "thanks": ("/gracias/", "/en/thanks/"),
+    "home": ("/es/", "/"),
+    "products": ("/es/productos/", "/products/"),
+    "cardamom": ("/es/productos/cardamomo/", "/products/cardamom/"),
+    "allspice": ("/es/productos/pimienta-gorda/", "/products/allspice/"),
+    "pepper": ("/es/productos/pimienta-negra/", "/products/black-pepper/"),
+    "clove": ("/es/productos/clavo/", "/products/clove/"),
+    "cinnamon": ("/es/productos/canela/", "/products/cinnamon/"),
+    "cacao": ("/es/productos/cacao/", "/products/cacao/"),
+    "honey": ("/es/productos/miel/", "/products/honey/"),
+    "vanilla": ("/es/productos/vainilla/", "/products/vanilla/"),
+    "producers": ("/es/productores/", "/producers/"),
+    "about": ("/es/nosotros/", "/about/"),
+    "sustainability": ("/es/sostenibilidad/", "/sustainability/"),
+    "quality": ("/es/calidad/", "/quality/"),
+    "export": ("/es/exportacion/", "/export/"),
+    "contact": ("/es/contacto/", "/contact/"),
+    "thanks": ("/es/gracias/", "/thanks/"),
 }
 NO_INDEX = {"thanks"}
-PRODUCT_KEYS = ("cardamom", "honey", "vanilla")
+PRODUCT_KEYS = ("cardamom", "allspice", "pepper", "clove", "cinnamon", "cacao", "honey", "vanilla")
+SOON_KEYS = ("honey", "vanilla")  # se muestran como "Próximamente"
+
+# Direcciones de la versión anterior del sitio (español en la raíz, inglés en /en/).
+# Se redirigen a su página nueva para no romper enlaces ni posiciones en Google.
+LEGACY = {
+    "/productos/": "products", "/productos/cardamomo/": "cardamom", "/productos/miel/": "honey",
+    "/productos/vainilla/": "vanilla", "/nosotros/": "about", "/sostenibilidad/": "sustainability",
+    "/calidad/": "quality", "/exportacion/": "export", "/contacto/": "contact", "/gracias/": "thanks",
+}
+LEGACY_EN = {
+    "/en/": "home", "/en/products/": "products", "/en/products/cardamom/": "cardamom",
+    "/en/products/honey/": "honey", "/en/products/vanilla/": "vanilla", "/en/about/": "about",
+    "/en/sustainability/": "sustainability", "/en/quality/": "quality", "/en/export/": "export",
+    "/en/contact/": "contact", "/en/thanks/": "thanks",
+}
 
 T = {
     "es": {
-        "nav": [("products", "Productos"), ("about", "Nosotros"), ("sustainability", "Sostenibilidad"),
-                ("quality", "Calidad"), ("export", "Exportación"), ("contact", "Contacto")],
-        "names": {"home": "Inicio", "products": "Productos", "cardamom": "Cardamomo", "honey": "Miel",
-                  "vanilla": "Vainilla", "about": "Nosotros", "sustainability": "Sostenibilidad",
-                  "quality": "Calidad", "export": "Exportación", "contact": "Contacto", "thanks": "Gracias"},
+        "nav": [("products", "Productos"), ("producers", "Productores"), ("sustainability", "Sostenibilidad"),
+                ("about", "Nosotros"), ("export", "Exportación"), ("contact", "Contacto")],
+        "names": {"home": "Inicio", "products": "Productos", "cardamom": "Cardamomo", "allspice": "Pimienta gorda",
+                  "pepper": "Pimienta negra", "clove": "Clavo", "cinnamon": "Canela", "cacao": "Cacao",
+                  "honey": "Miel", "vanilla": "Vainilla", "producers": "Productores", "about": "Nosotros",
+                  "sustainability": "Sostenibilidad", "quality": "Calidad", "export": "Exportación",
+                  "contact": "Contacto", "thanks": "Gracias"},
+        "soon": "Próximamente",
         "skip": "Saltar al contenido",
         "menu": "Abrir menú",
         "switch": ("EN", "English version"),
         "home_label": "KAB EXPORT, inicio",
-        "foot_about": "Cardamomo, miel y vainilla orgánicos de Centroamérica para importadores y la industria alimentaria en Europa y Norteamérica.",
+        "foot_about": "Especias y cacao de comunidades productoras de Alta Verapaz, Guatemala, para compradores en Canadá y Estados Unidos.",
         "foot_products": "Productos",
         "foot_company": "Empresa",
         "foot_contact": "Contacto",
         "foot_quote": "Solicitar cotización",
         "rights": "Todos los derechos reservados.",
-        "origin": "Hecho en Centroamérica.",
-        "locale": "es_ES",
-        "org_desc": "Exportador de cardamomo, miel y vainilla orgánicos de Centroamérica.",
+        "origin": "Desde Alta Verapaz, Guatemala.",
+        "locale": "es_GT",
+        "org_desc": "Exportador guatemalteco de especias y cacao de comunidades productoras de Alta Verapaz.",
     },
     "en": {
-        "nav": [("products", "Products"), ("about", "About"), ("sustainability", "Sustainability"),
-                ("quality", "Quality"), ("export", "Export"), ("contact", "Contact")],
-        "names": {"home": "Home", "products": "Products", "cardamom": "Cardamom", "honey": "Honey",
-                  "vanilla": "Vanilla", "about": "About", "sustainability": "Sustainability",
-                  "quality": "Quality", "export": "Export", "contact": "Contact", "thanks": "Thank you"},
+        "nav": [("products", "Products"), ("producers", "Producers"), ("sustainability", "Sustainability"),
+                ("about", "About"), ("export", "Export"), ("contact", "Contact")],
+        "names": {"home": "Home", "products": "Products", "cardamom": "Cardamom", "allspice": "Allspice",
+                  "pepper": "Black pepper", "clove": "Clove", "cinnamon": "Cinnamon", "cacao": "Cacao",
+                  "honey": "Honey", "vanilla": "Vanilla", "producers": "Producers", "about": "About",
+                  "sustainability": "Sustainability", "quality": "Quality", "export": "Export",
+                  "contact": "Contact", "thanks": "Thank you"},
+        "soon": "Coming soon",
         "skip": "Skip to content",
         "menu": "Open menu",
         "switch": ("ES", "Versión en español"),
         "home_label": "KAB EXPORT, home",
-        "foot_about": "Organic cardamom, honey and vanilla from Central America for importers and food manufacturers in Europe and North America.",
+        "foot_about": "Spices and cacao from producer communities in Alta Verapaz, Guatemala, for buyers in Canada and the United States.",
         "foot_products": "Products",
         "foot_company": "Company",
         "foot_contact": "Contact",
         "foot_quote": "Request a quote",
         "rights": "All rights reserved.",
-        "origin": "Made in Central America.",
+        "origin": "From Alta Verapaz, Guatemala.",
         "locale": "en_US",
-        "org_desc": "Exporter of organic cardamom, honey and vanilla from Central America.",
+        "org_desc": "Guatemalan exporter of spices and cacao from producer communities in Alta Verapaz.",
     },
 }
 
@@ -102,6 +132,31 @@ ICONS = {
                 '<g transform="translate(48 13)" fill="currentColor" fill-opacity=".14"><ellipse rx="4" ry="9" transform="rotate(-20)"/>'
                 '<ellipse rx="4" ry="9" transform="rotate(50)"/><ellipse rx="4" ry="9" transform="rotate(120)"/></g></g>'
                 '<circle cx="48" cy="13" r="2.6" fill="var(--honey)"/></svg>'),
+    "allspice": ('<svg class="icon" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">'
+                 '<path d="M34 8c-2 8-4 14-10 20M34 8c4 6 6 12 6 18M34 8c8 4 12 8 16 14"/>'
+                 '<path d="M10 20c6-8 16-10 22-12-4 8-12 14-22 12Z" fill="currentColor" fill-opacity=".14"/>'
+                 '<g fill="currentColor" fill-opacity=".14"><circle cx="22" cy="36" r="7"/><circle cx="38" cy="38" r="7"/><circle cx="30" cy="50" r="7"/></g>'
+                 '</g><circle cx="51" cy="28" r="6" fill="var(--honey)"/></svg>'),
+    "pepper": ('<svg class="icon" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">'
+               '<path d="M20 6c2 16 6 34 18 52"/>'
+               '<path d="M22 14c8-6 20-6 30 0-8 8-20 8-30 0Z" fill="currentColor" fill-opacity=".14"/>'
+               '<g fill="currentColor" fill-opacity=".14"><circle cx="17" cy="26" r="4"/><circle cx="27" cy="29" r="4"/><circle cx="20" cy="36" r="4"/>'
+               '<circle cx="31" cy="39" r="4"/><circle cx="25" cy="45" r="4"/><circle cx="35" cy="49" r="4"/></g>'
+               '</g><circle cx="41" cy="56" r="3.6" fill="var(--honey)"/></svg>'),
+    "clove": ('<svg class="icon" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">'
+              '<path d="M29 24 25 58h6l-2-34" fill="currentColor" fill-opacity=".14"/>'
+              '<path d="M22 24h14l-3 6h-8Z" fill="currentColor" fill-opacity=".14"/>'
+              '<path d="M23 24c-6-2-8-8-6-12 4 0 8 4 9 10M35 24c6-2 8-8 6-12-4 0-8 4-9 10"/>'
+              '</g><circle cx="29" cy="14" r="6" fill="var(--honey)"/></svg>'),
+    "cinnamon": ('<svg class="icon" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">'
+                 '<path d="M14 40 44 10a6 6 0 0 1 8 8L22 48" fill="currentColor" fill-opacity=".14"/>'
+                 '<path d="M44 10a6 6 0 0 0 8 8M47 13a2 2 0 0 0 2 2"/>'
+                 '<path d="M14 52 44 22a6 6 0 0 1 8 8L22 60"/><path d="M14 40l-2 2a6 6 0 0 0 8 8l2-2"/>'
+                 '</g><circle cx="12" cy="56" r="4" fill="var(--honey)"/></svg>'),
+    "cacao": ('<svg class="icon" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">'
+              '<path d="M32 6c12 6 16 18 14 30S36 58 32 58 18 48 18 36 20 12 32 6Z" fill="currentColor" fill-opacity=".14"/>'
+              '<path d="M32 6c-4 14-4 36 0 52M32 6c4 14 4 36 0 52M25 12c-4 14-3 32 2 44M39 12c4 14 3 32-2 44"/>'
+              '<path d="M32 6V2"/></g><circle cx="49" cy="52" r="5" fill="var(--honey)"/></svg>'),
 }
 
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
@@ -142,7 +197,7 @@ def json_ld(key, lang, meta):
         "logo": DOMAIN + "/assets/img/logo.png",
         "email": EMAIL,
         "description": t["org_desc"],
-        "areaServed": ["DE", "ES", "US", "MX", "GT", "SV", "NI", "HN", "CR", "PA", "BZ"],
+        "areaServed": ["CA", "US"],
     }
     graph = [org]
     if key == "home":
@@ -180,9 +235,12 @@ def render(key, lang, meta, body):
         for k, label in t["nav"])
     robots = '<meta name="robots" content="noindex">\n' if key in NO_INDEX else ""
     body = body.replace("{{crumbs}}", crumbs_html(key, lang))
-    prod_links = "".join(f'<li><a href="{path_of(k, lang)}">{t["names"][k]}</a></li>' for k in PRODUCT_KEYS)
+    prod_links = "".join(f'<li><a href="{path_of(k, lang)}">{t["names"][k]}</a></li>'
+                         for k in PRODUCT_KEYS if k not in SOON_KEYS)
+    prod_links += "".join(f'<li><a href="{path_of(k, lang)}">{t["names"][k]} · {t["soon"].lower()}</a></li>'
+                          for k in SOON_KEYS)
     company_links = "".join(f'<li><a href="{path_of(k, lang)}">{t["names"][k]}</a></li>'
-                            for k in ("about", "sustainability", "quality", "export"))
+                            for k in ("producers", "about", "sustainability", "quality", "export"))
     year = date.today().year
     return f"""<!doctype html>
 <html lang="{lang}">
@@ -194,7 +252,7 @@ def render(key, lang, meta, body):
 {robots}<link rel="canonical" href="{url}">
 <link rel="alternate" hreflang="es" href="{DOMAIN}{path_of(key, "es")}">
 <link rel="alternate" hreflang="en" href="{DOMAIN}{path_of(key, "en")}">
-<link rel="alternate" hreflang="x-default" href="{DOMAIN}{path_of(key, "es")}">
+<link rel="alternate" hreflang="x-default" href="{DOMAIN}{path_of(key, "en")}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="KAB EXPORT">
 <meta property="og:title" content="{esc(meta["title"])}">
@@ -260,7 +318,7 @@ def sitemap():
     for key, (es, en) in PAGES.items():
         if key in NO_INDEX:
             continue
-        for p in (es, en):
+        for p in (en, es):
             rows.append(
                 f"  <url><loc>{DOMAIN}{p}</loc><lastmod>{today}</lastmod>"
                 f'<xhtml:link rel="alternate" hreflang="es" href="{DOMAIN}{es}"/>'
@@ -270,19 +328,60 @@ def sitemap():
             + "\n".join(rows) + "\n</urlset>\n")
 
 
+def redirect_page(target):
+    url = DOMAIN + target
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>KAB EXPORT</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="{url}">
+<meta http-equiv="refresh" content="0; url={target}">
+</head>
+<body><p><a href="{target}">KAB EXPORT</a></p></body>
+</html>
+"""
+
+
+def legacy_redirects():
+    """Rutas viejas -> ruta nueva. Las usan las páginas de redirección y vercel.json."""
+    pairs = {old: path_of(k, "es") for old, k in LEGACY.items()}
+    pairs.update({old: path_of(k, "en") for old, k in LEGACY_EN.items()})
+    return pairs
+
+
+def clean_output():
+    """Borra las páginas generadas antes (deja assets, CNAME, robots.txt y .nojekyll)."""
+    for f in OUT.rglob("index.html"):
+        if "assets" not in f.parts:
+            f.unlink()
+    for d in sorted((p for p in OUT.rglob("*") if p.is_dir()), key=lambda p: -len(p.parts)):
+        if "assets" not in d.parts and not any(d.iterdir()):
+            d.rmdir()
+
+
 def main():
+    clean_output()
     count = 0
-    for lang in ("es", "en"):
+    for lang in ("en", "es"):
         for key in PAGES:
             meta, body = read_page(lang, key)
             write(path_of(key, lang), render(key, lang, meta, body))
             count += 1
-    # 404: usa el contenido en español con enlace al inglés
-    meta, body = read_page("es", "404")
-    page = render("home", "es", meta, body).replace('<link rel="canonical" href="https://kabexport.com/">', '<meta name="robots" content="noindex">')
+    redirects = legacy_redirects()
+    for old, new in redirects.items():
+        write(old, redirect_page(new))
+    vercel = ROOT / "vercel.json"
+    cfg = json.loads(vercel.read_text(encoding="utf-8"))
+    cfg["redirects"] = [{"source": old, "destination": new, "permanent": True} for old, new in redirects.items()]
+    vercel.write_text(json.dumps(cfg, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    # 404: en inglés, con enlace al español
+    meta, body = read_page("en", "404")
+    page = render("home", "en", meta, body).replace('<link rel="canonical" href="https://kabexport.com/">', '<meta name="robots" content="noindex">')
     (OUT / "404.html").write_text(page, encoding="utf-8")
     (OUT / "sitemap.xml").write_text(sitemap(), encoding="utf-8")
-    print(f"{count} páginas + 404 + sitemap.xml generados en {OUT}")
+    print(f"{count} páginas + {len(redirects)} redirecciones + 404 + sitemap.xml generados en {OUT}")
 
 
 if __name__ == "__main__":

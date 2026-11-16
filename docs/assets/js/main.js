@@ -46,24 +46,22 @@
     comb.appendChild(el('circle', { cx: 400, cy: 40, r: 6, fill: 'var(--honey-soft)' }));
   }
 
-  // Mapa de rutas (proyección equirectangular, lon -130..30, lat 60..0)
+  // Mapa de rutas (proyección equirectangular, lon -128..-58, lat 58..10)
   var map = document.getElementById('map');
   if (map) {
     var T = {
-      es: { mx: 'México', us: 'Estados Unidos', es: 'España', de: 'Alemania', ca: 'Centroamérica', origin: 'Origen', note: 'Esquema, no a escala' },
-      en: { mx: 'Mexico', us: 'United States', es: 'Spain', de: 'Germany', ca: 'Central America', origin: 'Origin', note: 'Schematic, not to scale' }
+      es: { ca: 'Canadá', us: 'Estados Unidos', av: 'Alta Verapaz', gt: 'Guatemala · origen', note: 'Esquema, no a escala' },
+      en: { ca: 'Canada', us: 'United States', av: 'Alta Verapaz', gt: 'Guatemala · origin', note: 'Schematic, not to scale' }
     }[lang];
-    var xy = function (lat, lon) { return [(lon + 130) / 160 * 800, (60 - lat) / 60 * 300]; };
+    var xy = function (lat, lon) { return [(lon + 128) / 70 * 800, (58 - lat) / 48 * 300]; };
     var html = '<defs><pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.3" class="dotgrid"/></pattern></defs><rect width="800" height="300" fill="url(#dots)" opacity=".7"/>';
-    var o = xy(14.5, -88);
+    var o = xy(15.9, -90.3);
     var dests = [
-      { n: T.mx, lat: 19.4, lon: -99.1, lift: 30, dx: -12, anchor: 'end', dy: 4 },
-      { n: T.us, lat: 36, lon: -95, lift: 50, dx: -12, anchor: 'end', dy: 4 },
-      { n: T.es, lat: 40.4, lon: -3.7, lift: 70, dx: 0, anchor: 'middle', dy: 26 },
-      { n: T.de, lat: 51.2, lon: 10.4, lift: 80, dx: 0, anchor: 'middle', dy: -14 }
+      { n: T.us, lat: 39, lon: -96, lift: 40, dx: -12, anchor: 'end', dy: 4 },
+      { n: T.ca, lat: 47, lon: -79, lift: 50, dx: 12, anchor: 'start', dy: 4 }
     ];
     dests.forEach(function (d, i) {
-      var t = xy(d.lat, d.lon), mx = (o[0] + t[0]) / 2, my = Math.min(o[1], t[1]) - d.lift;
+      var t = xy(d.lat, d.lon), mx = (o[0] + t[0]) / 2 + (t[0] < o[0] ? -50 : 50), my = Math.min(o[1], t[1]) - d.lift;
       var path = 'M' + o[0] + ' ' + o[1] + ' Q' + mx + ' ' + my + ' ' + t[0] + ' ' + t[1];
       html += '<path class="route" d="' + path + '"/>';
       html += '<circle class="pulse" r="3.5" fill="var(--honey)"><animateMotion dur="' + (4 + i) + 's" repeatCount="indefinite" path="' + path + '"/></circle>';
@@ -71,7 +69,7 @@
       html += '<text class="lbl" x="' + (t[0] + d.dx) + '" y="' + (t[1] + d.dy) + '" text-anchor="' + d.anchor + '">' + d.n + '</text>';
     });
     html += '<circle class="origin" cx="' + o[0] + '" cy="' + o[1] + '" r="11" opacity=".25"/><circle class="origin" cx="' + o[0] + '" cy="' + o[1] + '" r="6"/>';
-    html += '<text class="lbl" x="' + (o[0] + 14) + '" y="' + (o[1] + 22) + '">' + T.ca + '</text><text class="lbl-s" x="' + (o[0] + 14) + '" y="' + (o[1] + 37) + '">' + T.origin + '</text>';
+    html += '<text class="lbl" x="' + (o[0] + 16) + '" y="' + (o[1] + 4) + '">' + T.av + '</text><text class="lbl-s" x="' + (o[0] + 16) + '" y="' + (o[1] + 20) + '">' + T.gt + '</text>';
     html += '<text class="lbl-s" x="790" y="290" text-anchor="end">' + T.note + '</text>';
     map.innerHTML = html;
   }
@@ -86,10 +84,10 @@
     });
   });
 
-  // Producto preseleccionado en el formulario (?p=cardamomo)
+  // Producto preseleccionado en el formulario (?p=cardamomo, ?p=pimienta-gorda…)
   var sel = document.getElementById('f-product');
   if (sel) {
-    var m = location.search.match(/[?&]p=([a-z]+)/);
+    var m = location.search.match(/[?&]p=([a-z-]+)/);
     if (m) for (var i = 0; i < sel.options.length; i++) if (sel.options[i].getAttribute('data-k') === m[1]) sel.selectedIndex = i;
   }
 })();

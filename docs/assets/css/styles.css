@@ -241,6 +241,25 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 .foot-bottom { margin-top: 48px; padding-top: 20px; border-top: 1px solid color-mix(in srgb, var(--on-forest) 15%, transparent); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 0.85rem; opacity: .7; }
 
 /* ---------- Responsive ---------- */
+/* ---------- Productos próximamente y calendario ---------- */
+.tag { display: inline-block; align-self: flex-start; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 12px; border-radius: 99px; background: var(--chip); color: var(--muted); }
+.tag.in { background: color-mix(in srgb, var(--sage) 28%, transparent); color: var(--fg); }
+.prod.soon { background: transparent; border-style: dashed; }
+.products.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.sub-head { margin: 56px 0 22px; display: grid; gap: 8px; }
+.sub-head h3 { font-size: 1.5rem; }
+.sub-head p { color: var(--muted); max-width: 62ch; }
+.statement { font-family: var(--display); font-size: clamp(1.5rem, 3.2vw, 2.3rem); line-height: 1.25; max-width: 30ch; }
+.band .statement em { color: var(--honey-soft); }
+.places { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.place { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; display: grid; gap: 10px; align-content: start; }
+.place h3 { font-size: 1.35rem; }
+.place p { color: var(--muted); font-size: 0.97rem; }
+.place .chips { margin-top: 4px; }
+@media (max-width: 900px) {
+  .products.two, .places { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 980px) {
   .menu-btn { display: inline-flex; }
   .nav { flex-wrap: wrap; }

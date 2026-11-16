@@ -2,5 +2,112 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "",
   "outputDirectory": "docs",
-  "trailingSlash": true
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/productos/",
+      "destination": "/es/productos/",
+      "permanent": true
+    },
+    {
+      "source": "/productos/cardamomo/",
+      "destination": "/es/productos/cardamomo/",
+      "permanent": true
+    },
+    {
+      "source": "/productos/miel/",
+      "destination": "/es/productos/miel/",
+      "permanent": true
+    },
+    {
+      "source": "/productos/vainilla/",
+      "destination": "/es/productos/vainilla/",
+      "permanent": true
+    },
+    {
+      "source": "/nosotros/",
+      "destination": "/es/nosotros/",
+      "permanent": true
+    },
+    {
+      "source": "/sostenibilidad/",
+      "destination": "/es/sostenibilidad/",
+      "permanent": true
+    },
+    {
+      "source": "/calidad/",
+      "destination": "/es/calidad/",
+      "permanent": true
+    },
+    {
+      "source": "/exportacion/",
+      "destination": "/es/exportacion/",
+      "permanent": true
+    },
+    {
+      "source": "/contacto/",
+      "destination": "/es/contacto/",
+      "permanent": true
+    },
+    {
+      "source": "/gracias/",
+      "destination": "/es/gracias/",
+      "permanent": true
+    },
+    {
+      "source": "/en/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/en/products/",
+      "destination": "/products/",
+      "permanent": true
+    },
+    {
+      "source": "/en/products/cardamom/",
+      "destination": "/products/cardamom/",
+      "permanent": true
+    },
+    {
+      "source": "/en/products/honey/",
+      "destination": "/products/honey/",
+      "permanent": true
+    },
+    {
+      "source": "/en/products/vanilla/",
+      "destination": "/products/vanilla/",
+      "permanent": true
+    },
+    {
+      "source": "/en/about/",
+      "destination": "/about/",
+      "permanent": true
+    },
+    {
+      "source": "/en/sustainability/",
+      "destination": "/sustainability/",
+      "permanent": true
+    },
+    {
+      "source": "/en/quality/",
+      "destination": "/quality/",
+      "permanent": true
+    },
+    {
+      "source": "/en/export/",
+      "destination": "/export/",
+      "permanent": true
+    },
+    {
+      "source": "/en/contact/",
+      "destination": "/contact/",
+      "permanent": true
+    },
+    {
+      "source": "/en/thanks/",
+      "destination": "/thanks/",
+      "permanent": true
+    }
+  ]
 }

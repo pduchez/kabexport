@@ -1,6 +1,6 @@
 # kabexport.com
 
-Sitio web de KAB EXPORT: cardamomo, miel y vainilla orgánicos de Centroamérica. Está en español (`/`) y en inglés (`/en/`).
+Sitio web de KAB EXPORT: especias y cacao de comunidades productoras de Alta Verapaz, Guatemala, para Canadá y Estados Unidos. El inglés es el idioma principal y está en la raíz (`/`); el español está en `/es/`.
 
 ## Estructura
 
@@ -21,19 +21,27 @@ Sitio web de KAB EXPORT: cardamomo, miel y vainilla orgánicos de Centroamérica
 
 ## Páginas
 
-| Español | Inglés |
+| Inglés | Español |
 |---|---|
-| `/` | `/en/` |
-| `/productos/` | `/en/products/` |
-| `/productos/cardamomo/` | `/en/products/cardamom/` |
-| `/productos/miel/` | `/en/products/honey/` |
-| `/productos/vainilla/` | `/en/products/vanilla/` |
-| `/nosotros/` | `/en/about/` |
-| `/sostenibilidad/` | `/en/sustainability/` |
-| `/calidad/` | `/en/quality/` |
-| `/exportacion/` | `/en/export/` |
-| `/contacto/` | `/en/contact/` |
-| `/gracias/` | `/en/thanks/` |
+| `/` | `/es/` |
+| `/products/` | `/es/productos/` |
+| `/products/cardamom/` | `/es/productos/cardamomo/` |
+| `/products/allspice/` | `/es/productos/pimienta-gorda/` |
+| `/products/black-pepper/` | `/es/productos/pimienta-negra/` |
+| `/products/clove/` | `/es/productos/clavo/` |
+| `/products/cinnamon/` | `/es/productos/canela/` |
+| `/products/cacao/` | `/es/productos/cacao/` |
+| `/products/honey/` (próximamente) | `/es/productos/miel/` |
+| `/products/vanilla/` (próximamente) | `/es/productos/vainilla/` |
+| `/producers/` | `/es/productores/` |
+| `/about/` | `/es/nosotros/` |
+| `/sustainability/` | `/es/sostenibilidad/` |
+| `/quality/` | `/es/calidad/` |
+| `/export/` | `/es/exportacion/` |
+| `/contact/` | `/es/contacto/` |
+| `/thanks/` | `/es/gracias/` |
+
+Las direcciones de la versión anterior (`/productos/`, `/nosotros/`, `/en/...`, etc.) redirigen a su página nueva. `build.py` genera esas redirecciones como páginas en `docs/` y también las escribe en `vercel.json`.
 
 ## Formulario de contacto
 
