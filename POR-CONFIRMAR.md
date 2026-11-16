@@ -52,7 +52,8 @@ Estos puntos siguen pendientes de confirmar con KAB EXPORT.
 
 ## Ficha de Nimlajacoc (/producers/nimlajacoc/)
 
-- Municipio exacto (la ficha dice «norte de Alta Verapaz»).
+- Municipio: la ficha dice «norte de Cobán» (las coordenadas y un documento municipal de Cobán lo ubican ahí). Confirmar, y revisar si la tarjeta «Chisec» de Productores debe seguir mencionando cardamomo orgánico familiar.
+- Visita de Jason Hunt: la ficha dice que incluyó Nimlajacoc (11-nov-2026), porque una foto de su llegada coincide con la del correo de Nimlajacoc. Confirmar.
 - Copia del certificado orgánico vigente, para publicarla en la ficha.
 - Familias productoras, área de cardamomo, número de matas, cardamomo seco por temporada, capacidad de secado por tanda y meses de cosecha.
 - Perfiles de productores, cada uno con su consentimiento (ver COMUNIDADES.md).

@@ -4,8 +4,11 @@ Una página por comunidad productora, en inglés y en español:
 
 - `/producers/<comunidad>/` y `/es/productores/<comunidad>/`
 - Se anuncian solas en la página de productores (sección «Community files»).
-- Cada ficha trae su propia imagen para compartir (`og.jpg`), botones de WhatsApp,
-  LinkedIn, correo, copiar enlace e imprimir o guardar en PDF.
+- Cada ficha trae su propia imagen para compartir (`og.jpg`). Los botones de compartir
+  (WhatsApp, LinkedIn, correo, copiar enlace, PDF) están apagados hasta nuevo aviso:
+  `SHOW_SHARE = False` en `tools/communities.py`.
+- Si la comunidad tiene `location`, la ficha muestra un mapa dibujado con las coordenadas
+  reales, que abre Google Earth, y un botón a Google Maps.
 
 ## La regla de la ficha: cada afirmación lleva su estado
 
@@ -50,6 +53,7 @@ Un comprador va a recorrer la ficha para comprobar lo que decimos. Por eso:
 | `field_record` | Mes de la visita, en los dos idiomas |
 | `place` | Ubicación tal como se publica |
 | `meta` | Título y descripción para buscadores |
+| `location` | `lat`, `lon` y el enlace de Google Earth (`earth`) |
 | `hero` | Foto principal, foto pequeña, frase y párrafo de entrada |
 | `ledger` | Las afirmaciones, cada una con `status`, foto, título y texto |
 | `journey` | El recorrido de la mata al saco, paso por paso |
@@ -77,3 +81,16 @@ Un comprador va a recorrer la ficha para comprobar lo que decimos. Por eso:
 
 `consent` va en `true` solo cuando la familia aceptó, en persona, que su nombre,
 su foto y sus datos se publiquen.
+
+## Visitas internacionales
+
+Cada visita vive en `content/visits/<AAAA-MM-visitante>/visit.json`, con sus fotos
+preparadas así:
+
+```bash
+python3 tools/community_photos.py visits/<slug> <carpeta-de-originales> <mapa.json>
+```
+
+La visita aparece en la página de productores y en la ficha de cada comunidad que
+lista en `communities`. Antes de publicar una foto, revisa logotipos de terceros,
+placas y rostros de personas de la comunidad.

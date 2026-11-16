@@ -22,6 +22,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import communities  # noqa: E402  fichas por comunidad
+import visits  # noqa: E402  visitas internacionales
 
 ROOT = Path(__file__).resolve().parent.parent
 CONTENT = ROOT / "content"
@@ -230,6 +231,7 @@ def landscape(big=False):
 
 # Fichas de comunidad: cada una se registra como página (ver tools/communities.py)
 COMMUNITIES = communities.load()
+VISITS = visits.load()
 for _k, _c in COMMUNITIES.items():
     PAGES[_k] = communities.paths(_c)
     for _lang in ("es", "en"):
@@ -262,6 +264,7 @@ def read_page(lang, key):
         body = body.replace("{{icon:%s}}" % k, svg)
     body = body.replace("{{email}}", EMAIL)
     body = body.replace("{{communities}}", communities.cards(COMMUNITIES, lang, SOON[lang]))
+    body = body.replace("{{visits}}", visits.section(VISITS, lang, path_of("contact", lang)))
     for k in PAGES:
         body = body.replace("{{url:%s}}" % k, path_of(k, lang))
     return meta, body
@@ -311,6 +314,8 @@ def json_ld(key, lang, meta):
         place = {"@type": "Place", "@id": DOMAIN + path_of(key, "en") + "#place", "name": c["name"],
                  "description": c["hero"]["lede"][lang],
                  "containedInPlace": {"@type": "AdministrativeArea", "name": "Alta Verapaz, Guatemala"},
+                 **({"geo": {"@type": "GeoCoordinates", "latitude": c["location"]["lat"], "longitude": c["location"]["lon"]},
+                     "hasMap": c["location"]["earth"]} if c.get("location") else {}),
                  "image": [DOMAIN + communities.IMG + "/" + c["slug"] + "/" + n + ".jpg" for n in c["gallery"][:6]]}
         graph.append(place)
         graph.append({"@type": "WebPage", "@id": DOMAIN + path_of(key, lang) + "#page", "url": DOMAIN + path_of(key, lang),
@@ -494,7 +499,8 @@ def main():
                 c = COMMUNITIES[key]
                 meta = c["meta"][lang]
                 body = communities.body(key, c, lang, DOMAIN + path_of(key, lang), "{{crumbs}}",
-                                        lambda k, _l=lang: path_of(k, _l), path_of("founder", lang))
+                                        lambda k, _l=lang: path_of(k, _l), path_of("founder", lang),
+                                        visits.section(VISITS, lang, path_of("contact", lang), c["slug"], c["name"]))
             else:
                 meta, body = read_page(lang, key)
             write(path_of(key, lang), render(key, lang, meta, body))

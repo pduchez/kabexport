@@ -9,6 +9,7 @@ Nada de lo que está aquí inventa datos: un campo vacío se publica como
 «en documentación», y un productor sin consentimiento no se publica.
 """
 import json
+import math
 from html import escape
 from pathlib import Path
 from urllib.parse import quote
@@ -16,6 +17,14 @@ from urllib.parse import quote
 ROOT = Path(__file__).resolve().parent.parent
 DIR = ROOT / "content" / "communities"
 IMG = "/assets/img/communities"
+SHOW_SHARE = False  # botones de compartir: apagados por decisión del cliente (16-nov-2026) hasta nuevo aviso
+
+# Puntos de referencia del mapa de ubicación (lat, lon)
+LANDMARKS = [
+    {"en": "Cobán", "es": "Cobán", "lat": 15.4708, "lon": -90.3711, "kind": "town"},
+    {"en": "Chisec", "es": "Chisec", "lat": 15.8125, "lon": -90.3217, "kind": "town"},
+    {"en": "Laguna Lachuá", "es": "Laguna Lachuá", "lat": 15.9167, "lon": -90.6667, "kind": "lake"},
+]
 
 L = {
     "en": {
@@ -58,7 +67,15 @@ L = {
         "prev": "Previous photo",
         "next": "Next photo",
         "list_title": "Community files",
-        "list_lede": "One page per community: what we have seen there, the photographs, and what we are still documenting. Share them freely.",
+        "list_lede": "One page per community: what we have seen there, the photographs, and what we are still documenting.",
+        "loc_eyebrow": "Where it is",
+        "loc_title": "{name} on the map",
+        "loc_from": "{km} km north-west of Cobán, in a straight line",
+        "loc_lake": "{km} km from Laguna Lachuá National Park",
+        "loc_earth": "Open in Google Earth",
+        "loc_maps": "Open in Google Maps",
+        "loc_aria": "Map showing the location of {name}. Opens Google Earth.",
+        "km": "km",
         "list_open": "Open the file",
         "list_soon": "File in preparation",
         "wa": "Field record of {name}, a cardamom-growing community in Alta Verapaz, Guatemala:",
@@ -103,7 +120,15 @@ L = {
         "prev": "Foto anterior",
         "next": "Foto siguiente",
         "list_title": "Fichas por comunidad",
-        "list_lede": "Una página por comunidad: lo que hemos visto ahí, las fotografías y lo que aún estamos documentando. Compártelas con libertad.",
+        "list_lede": "Una página por comunidad: lo que hemos visto ahí, las fotografías y lo que aún estamos documentando.",
+        "loc_eyebrow": "Dónde está",
+        "loc_title": "{name} en el mapa",
+        "loc_from": "{km} km al noroeste de Cobán, en línea recta",
+        "loc_lake": "{km} km del Parque Nacional Laguna Lachuá",
+        "loc_earth": "Abrir en Google Earth",
+        "loc_maps": "Abrir en Google Maps",
+        "loc_aria": "Mapa con la ubicación de {name}. Abre Google Earth.",
+        "km": "km",
         "list_open": "Abrir la ficha",
         "list_soon": "Ficha en preparación",
         "wa": "Ficha de campo de {name}, comunidad productora de cardamomo en Alta Verapaz, Guatemala:",
@@ -165,6 +190,97 @@ def _img(c, name, lang, cls="", sizes="(max-width: 700px) 100vw, 50vw", eager=Fa
             f'width="{w}" height="{h}" alt="{alt}" {load}>')
 
 
+def _zoom(c, name, lang):
+    """Atributos para el visor de fotos (assets/js/main.js)."""
+    return (f'data-zoom="{c["slug"]}/{name}" data-src="{IMG}/{c["slug"]}/{name}.jpg" '
+            f'data-cap="{escape(c["captions"][name][lang])}"')
+
+
+def _km(a_lat, a_lon, b_lat, b_lon):
+    r = 6371.0
+    p1, p2 = math.radians(a_lat), math.radians(b_lat)
+    dp, dl = p2 - p1, math.radians(b_lon - a_lon)
+    h = math.sin(dp / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(dl / 2) ** 2
+    return 2 * r * math.asin(math.sqrt(h))
+
+
+def _dms(v, pos, neg):
+    d = abs(v)
+    deg = int(d)
+    m = int((d - deg) * 60)
+    sec = (d - deg - m / 60) * 3600
+    return f"{deg}°{m:02d}′{sec:04.1f}″ {pos if v >= 0 else neg}"
+
+
+def location(c, lang):
+    """Tarjeta de ubicación: mapa dibujado con coordenadas reales y enlaces a Google Earth y Maps."""
+    loc = c.get("location")
+    if not loc:
+        return ""
+    t = L[lang]
+    name = escape(c["name"])
+    lat, lon = loc["lat"], loc["lon"]
+    # Ventana del mapa: centrada en la comunidad, con Cobán, Chisec y Lachuá a la vista
+    W, H = 600, 420
+    lon0, lon1, lat0, lat1 = -91.10, -90.15, 15.38, 16.02
+    X = lambda x: (x - lon0) / (lon1 - lon0) * W
+    Y = lambda y: (lat1 - y) / (lat1 - lat0) * H
+    px, py = X(lon), Y(lat)
+    grid = []
+    for i in range(1, 10):
+        g = lon0 + i * 0.1
+        grid.append(f'<line x1="{X(round(g, 1)):.1f}" y1="0" x2="{X(round(g, 1)):.1f}" y2="{H}"/>')
+    for i in range(1, 7):
+        g = round(lat0 + i * 0.1, 1)
+        grid.append(f'<line x1="0" y1="{Y(g):.1f}" x2="{W}" y2="{Y(g):.1f}"/>')
+    marks = []
+    for m in LANDMARKS:
+        x, y = X(m["lon"]), Y(m["lat"])
+        if m["kind"] == "lake":
+            marks.append(f'<ellipse class="lake" cx="{x:.1f}" cy="{y:.1f}" rx="16" ry="11"/>'
+                         f'<text x="{x + 22:.1f}" y="{y + 4:.1f}">{m[lang]}</text>')
+        else:
+            marks.append(f'<circle class="town" cx="{x:.1f}" cy="{y:.1f}" r="5"/>'
+                         f'<text x="{x + 11:.1f}" y="{y + 5:.1f}">{m[lang]}</text>')
+    coban = LANDMARKS[0]
+    cx, cy = X(coban["lon"]), Y(coban["lat"])
+    km_coban = round(_km(lat, lon, coban["lat"], coban["lon"]))
+    km_lake = round(_km(lat, lon, LANDMARKS[2]["lat"], LANDMARKS[2]["lon"]))
+    km10 = 10 / (111.32 * math.cos(math.radians(lat))) / (lon1 - lon0) * W  # 10 km en píxeles
+    mx, my = (px + cx) / 2, (py + cy) / 2
+    svg = f"""<svg class="locmap" viewBox="0 0 {W} {H}" role="img" aria-label="{escape(t["loc_aria"].format(name=c["name"]))}">
+      <defs><radialGradient id="glow"><stop offset="0" stop-color="#E9B866" stop-opacity=".55"/><stop offset="1" stop-color="#E9B866" stop-opacity="0"/></radialGradient></defs>
+      <rect width="{W}" height="{H}" class="sea"/>
+      <g class="grid">{"".join(grid)}</g>
+      <g class="rings">{"".join(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="{r}"/>' for r in (34, 62, 96, 136))}</g>
+      <path class="route" d="M{cx:.1f} {cy:.1f} L{px:.1f} {py:.1f}"/>
+      <text class="dist" x="{mx + 10:.1f}" y="{my + 4:.1f}">{km_coban} {t["km"]}</text>
+      <g class="marks">{"".join(marks)}</g>
+      <circle cx="{px:.1f}" cy="{py:.1f}" r="70" fill="url(#glow)"/>
+      <circle class="pulse" cx="{px:.1f}" cy="{py:.1f}" r="10"/>
+      <g class="pin" transform="translate({px:.1f} {py:.1f})"><path d="M0 0c-9-12-16-20-16-29a16 16 0 0 1 32 0c0 9-7 17-16 29Z"/><circle cy="-29" r="6"/></g>
+      <text class="here" x="{px - 36:.1f}" y="{py + 30:.1f}" text-anchor="end">{name}</text>
+      <g class="compass" transform="translate({W - 40} 44)"><path d="M0-22 7 6 0 1-7 6Z"/><text y="22" text-anchor="middle">N</text></g>
+      <g class="scale" transform="translate(24 {H - 26})"><path d="M0 0h{km10:.1f}M0-5v10M{km10:.1f}-5v10"/><text x="{km10 + 8:.1f}" y="5">10 {t["km"]}</text></g>
+    </svg>"""
+    earth = escape(loc["earth"])
+    maps = f"https://www.google.com/maps/search/?api=1&query={lat},{lon}"
+    return f"""<section class="block loc-block" id="location">
+  <div class="wrap">
+    <div class="loc">
+      <a class="loc-map" href="{earth}" target="_blank" rel="noopener">{svg}<span class="loc-open">{t["loc_earth"]} ↗</span></a>
+      <div class="loc-info">
+        <div class="eyebrow">{t["loc_eyebrow"]}</div>
+        <h2>{t["loc_title"].format(name=name)}</h2>
+        <p class="loc-coords"><span>{_dms(lat, "N", "S")}</span><span>{_dms(lon, "E", "W")}</span></p>
+        <ul class="loc-facts"><li>{escape(c["place"][lang])}</li><li>{t["loc_from"].format(km=km_coban)}</li><li>{t["loc_lake"].format(km=km_lake)}</li></ul>
+        <div class="loc-btns"><a class="btn btn-honey" href="{earth}" target="_blank" rel="noopener">{t["loc_earth"]} ↗</a><a class="btn btn-line" href="{escape(maps)}" target="_blank" rel="noopener">{t["loc_maps"]} ↗</a></div>
+      </div>
+    </div>
+  </div>
+</section>"""
+
+
 def _status(lang, status):
     t = L[lang]
     if status == "seen":
@@ -195,7 +311,7 @@ def _share(c, lang, url):
     return f'<div class="share" role="group" aria-label="{t["share"]}"><span class="share-label">{t["share"]}</span>{items}</div>'
 
 
-def body(key, c, lang, url, crumbs, url_of, founder_url):
+def body(key, c, lang, url, crumbs, url_of, founder_url, visits_html=""):
     t = L[lang]
     name = escape(c["name"])
     record = c["field_record"][lang]
@@ -215,7 +331,7 @@ def body(key, c, lang, url, crumbs, url_of, founder_url):
         <li>{_status(lang, "seen")}<b>{seen}</b></li>
         <li>{_status(lang, "pending")}<b>{pending}</b></li>
       </ul>
-      {_share(c, lang, url)}
+      {_share(c, lang, url) if SHOW_SHARE else ""}
     </div>
     <div class="cf-hero-art">
       <figure class="cf-main">{_img(c, c["hero"]["photo"], lang, sizes="(max-width: 900px) 90vw, 440px", eager=True)}</figure>
@@ -228,7 +344,7 @@ def body(key, c, lang, url, crumbs, url_of, founder_url):
     # 2. Libro de evidencias
     rows = []
     for e in c["ledger"]:
-        photo = (f'<button class="ev-photo" type="button" data-zoom="{e["photo"]}">{_img(c, e["photo"], lang, sizes="(max-width: 700px) 100vw, 320px")}</button>'
+        photo = (f'<button class="ev-photo" type="button" {_zoom(c, e["photo"], lang)}>{_img(c, e["photo"], lang, sizes="(max-width: 700px) 100vw, 320px")}</button>'
                  if e.get("photo") else '<div class="ev-photo ev-empty" aria-hidden="true">' + PENDING + '</div>')
         rows.append(f"""<article class="ev ev-{e["status"]}">
         {photo}
@@ -295,7 +411,7 @@ def body(key, c, lang, url, crumbs, url_of, founder_url):
 
     # 6. Galería
     tiles = "".join(
-        f'<li><button type="button" data-zoom="{n}">{_img(c, n, lang, sizes="(max-width: 700px) 50vw, 300px")}</button></li>'
+        f'<li><button type="button" {_zoom(c, n, lang)}>{_img(c, n, lang, sizes="(max-width: 700px) 50vw, 300px")}</button></li>'
         for n in c["gallery"])
     gallery = f"""<section class="block tight">
   <div class="wrap">
@@ -320,15 +436,7 @@ def body(key, c, lang, url, crumbs, url_of, founder_url):
   </div>
 </section>"""
 
-    # Visor de fotos (sin dependencias)
-    data = {n: {"src": f"{IMG}/{c['slug']}/{n}.jpg", "cap": c["captions"][n][lang]} for n in c["dims"]}
-    viewer = (f'<dialog class="viewer" aria-label="{t["gallery_title"]}"><figure><img alt=""><figcaption></figcaption></figure>'
-              f'<button type="button" class="v-close" aria-label="{t["close"]}">×</button>'
-              f'<button type="button" class="v-prev" aria-label="{t["prev"]}">‹</button>'
-              f'<button type="button" class="v-next" aria-label="{t["next"]}">›</button></dialog>'
-              f'<script type="application/json" id="photos">{json.dumps(data, ensure_ascii=False)}</script>')
-
-    return "\n\n".join([hero, ledger, journey, figures, people, gallery, visit, viewer])
+    return "\n\n".join(x for x in [hero, location(c, lang), ledger, journey, figures, people, visits_html, gallery, visit] if x)
 
 
 def cards(communities, lang, soon=()):

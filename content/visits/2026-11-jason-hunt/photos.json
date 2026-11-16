@@ -1,0 +1,34 @@
+{
+ "camino": [
+  1600,
+  1200
+ ],
+ "con-productor": [
+  480,
+  640
+ ],
+ "conversacion-finca": [
+  480,
+  640
+ ],
+ "entre-las-matas": [
+  480,
+  640
+ ],
+ "recorrido-cardamomal": [
+  480,
+  640
+ ],
+ "reunion-bodega": [
+  640,
+  480
+ ],
+ "secadoras-solares": [
+  1600,
+  901
+ ],
+ "sendero-bosque": [
+  480,
+  640
+ ]
+}

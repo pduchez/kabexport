@@ -1,0 +1,31 @@
+{
+  "slug": "2026-11-jason-hunt",
+  "start": "2026-11-10",
+  "end": "2026-11-12",
+  "visitor": "Jason Hunt",
+  "role": {"en": "CEO", "es": "CEO"},
+  "company": "Canadian Spice Supply",
+  "company_url": "https://spicesupply.ca/",
+  "company_place": {"en": "St. Marys, Ontario, Canada", "es": "St. Marys, Ontario, Canadá"},
+  "flag": "CA",
+  "communities": ["nimlajacoc"],
+  "summary": {
+    "en": "Three days in northern Alta Verapaz: walking cardamom plots under the forest canopy, visiting drying facilities and sitting down with producer organizations to talk about the season.",
+    "es": "Tres días en el norte de Alta Verapaz: recorriendo cardamomales bajo el dosel del bosque, conociendo instalaciones de secado y sentándose con organizaciones de productores a conversar sobre la temporada."
+  },
+  "did": {
+    "en": ["Walked the cardamom plots", "Visited drying facilities", "Met producer organizations"],
+    "es": ["Recorrió los cardamomales", "Conoció las instalaciones de secado", "Se reunió con organizaciones de productores"]
+  },
+  "photos": ["reunion-bodega", "recorrido-cardamomal", "con-productor", "secadoras-solares", "sendero-bosque", "conversacion-finca", "entre-las-matas", "camino"],
+  "captions": {
+    "recorrido-cardamomal": {"en": "Walking a cardamom farm with the producers.", "es": "Recorriendo una finca de cardamomo con los productores."},
+    "sendero-bosque": {"en": "On a path through the forest to the plots.", "es": "Por un sendero del bosque hacia las parcelas."},
+    "conversacion-finca": {"en": "Talking with a producer on his farm.", "es": "Conversando con un productor en su finca."},
+    "entre-las-matas": {"en": "Looking at the plants up close.", "es": "Viendo las matas de cerca."},
+    "camino": {"en": "On the road between communities.", "es": "En el camino entre comunidades."},
+    "con-productor": {"en": "With a producer at his drying facility.", "es": "Con un productor en su beneficio."},
+    "reunion-bodega": {"en": "Meeting with a producer organization in its warehouse.", "es": "Reunión con una organización de productores en su bodega."},
+    "secadoras-solares": {"en": "At the solar drying beds of a collection centre.", "es": "En las camas de secado solar de un centro de acopio."}
+  }
+}

@@ -2,6 +2,7 @@
 """Prepara las fotos de una comunidad para publicarlas.
 
     python3 tools/community_photos.py <slug> <carpeta-de-originales> <mapa.json>
+    python3 tools/community_photos.py visits/<slug> <carpeta> <mapa.json>   # fotos de una visita
 
 El mapa dice qué original se publica y con qué nombre:
 
@@ -30,7 +31,9 @@ def main():
         raise SystemExit(__doc__)
     slug, src_dir, map_file = sys.argv[1], Path(sys.argv[2]), Path(sys.argv[3])
     mapping = json.loads(map_file.read_text(encoding="utf-8"))
-    out_dir = ROOT / "docs" / "assets" / "img" / "communities" / slug
+    group, _, slug = slug.rpartition("/")
+    group = group or "communities"
+    out_dir = ROOT / "docs" / "assets" / "img" / group / slug
     out_dir.mkdir(parents=True, exist_ok=True)
     dims = {}
     for name, spec in mapping.items():
@@ -47,7 +50,7 @@ def main():
             clean.save(out_dir / f"{name}{suffix}.jpg", "JPEG", quality=80, optimize=True, progressive=True)
             if suffix == "":
                 dims[name] = list(clean.size)
-    meta_dir = ROOT / "content" / "communities" / slug
+    meta_dir = ROOT / "content" / group / slug
     meta_dir.mkdir(parents=True, exist_ok=True)
     (meta_dir / "photos.json").write_text(json.dumps(dims, indent=1, sort_keys=True) + "\n", encoding="utf-8")
     print(f"{len(dims)} fotos en {out_dir.relative_to(ROOT)}")

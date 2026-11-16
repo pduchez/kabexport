@@ -108,21 +108,34 @@
     });
     wa.parentNode.insertBefore(shareBtn, wa.nextSibling);
   }
-  var viewer = document.querySelector('.viewer'), photosEl = document.getElementById('photos');
-  if (viewer && photosEl && viewer.showModal) {
-    var photos = JSON.parse(photosEl.textContent), order = [], pos = 0;
-    document.querySelectorAll('[data-zoom]').forEach(function (b) {
-      var k = b.getAttribute('data-zoom');
-      if (order.indexOf(k) < 0) order.push(k);
+  var zooms = document.querySelectorAll('[data-zoom]');
+  if (zooms.length && window.HTMLDialogElement) {
+    var en = lang === 'en';
+    var viewer = document.createElement('dialog');
+    viewer.className = 'viewer';
+    viewer.innerHTML = '<figure><img alt=""><figcaption></figcaption></figure>' +
+      '<button type="button" class="v-close" aria-label="' + (en ? 'Close' : 'Cerrar') + '">×</button>' +
+      '<button type="button" class="v-prev" aria-label="' + (en ? 'Previous photo' : 'Foto anterior') + '">‹</button>' +
+      '<button type="button" class="v-next" aria-label="' + (en ? 'Next photo' : 'Foto siguiente') + '">›</button>';
+    document.body.appendChild(viewer);
+    var groups = {}, cur = [], pos = 0;  // un grupo por ficha o visita: el visor no mezcla fotos de otra
+    zooms.forEach(function (b) {
+      var g = b.getAttribute('data-zoom').split('/')[0], src = b.getAttribute('data-src');
+      groups[g] = groups[g] || [];
+      if (!groups[g].some(function (p) { return p.src === src; })) groups[g].push({ src: src, cap: b.getAttribute('data-cap') });
     });
     var vImg = viewer.querySelector('img'), vCap = viewer.querySelector('figcaption');
     var show = function (i) {
-      pos = (i + order.length) % order.length;
-      var p = photos[order[pos]];
-      vImg.src = p.src; vImg.alt = p.cap; vCap.textContent = p.cap;
+      pos = (i + cur.length) % cur.length;
+      vImg.src = cur[pos].src; vImg.alt = cur[pos].cap; vCap.textContent = cur[pos].cap;
     };
-    document.querySelectorAll('[data-zoom]').forEach(function (b) {
-      b.addEventListener('click', function () { show(order.indexOf(b.getAttribute('data-zoom'))); viewer.showModal(); });
+    zooms.forEach(function (b) {
+      b.addEventListener('click', function () {
+        cur = groups[b.getAttribute('data-zoom').split('/')[0]];
+        var src = b.getAttribute('data-src');
+        show(cur.map(function (p) { return p.src; }).indexOf(src));
+        viewer.showModal();
+      });
     });
     viewer.querySelector('.v-close').addEventListener('click', function () { viewer.close(); });
     viewer.querySelector('.v-prev').addEventListener('click', function () { show(pos - 1); });
