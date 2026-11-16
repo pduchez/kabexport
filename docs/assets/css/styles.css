@@ -257,6 +257,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 .places { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
 .place { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; display: grid; gap: 10px; align-content: start; }
 .place h3 { font-size: 1.35rem; }
+.place .tag { justify-self: start; }
 .place p { color: var(--muted); font-size: 0.97rem; }
 .place .chips { margin-top: 4px; }
 @media (max-width: 900px) {

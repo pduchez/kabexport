@@ -45,6 +45,19 @@ PAGES = {
     "export": ("/es/exportacion/", "/export/"),
     "contact": ("/es/contacto/", "/contact/"),
     "thanks": ("/es/gracias/", "/thanks/"),
+    "founder": ("/es/pedro-pablo-duchez-meyer/", "/pedro-pablo-duchez-meyer/"),
+}
+
+# Perfil del director: datos para que los buscadores relacionen su nombre con esta página.
+PERSON = {
+    "name": "Pedro Pablo Duchez Meyer",
+    "alternateName": ["Pedro Pablo Duchez", "Pedro Duchez", "Pedro Duchez Meyer", "P. P. Duchez Meyer"],
+    "image": "/assets/img/pedro-pablo-duchez-meyer.jpg",
+    "sameAs": [
+        "https://www.linkedin.com/in/pedropabloduchez",
+        "https://www.da-consortium.com/pedro-pablo-duchez-meyer",
+        "https://destinopropiedades.com/quienes-somos",
+    ],
 }
 NO_INDEX = {"thanks"}
 PRODUCT_KEYS = ("cardamom", "allspice", "pepper", "clove", "cinnamon", "cacao", "honey", "vanilla")
@@ -72,7 +85,8 @@ T = {
                   "pepper": "Pimienta negra", "clove": "Clavo", "cinnamon": "Canela", "cacao": "Cacao",
                   "honey": "Miel", "vanilla": "Vainilla", "producers": "Productores", "about": "Nosotros",
                   "sustainability": "Sostenibilidad", "quality": "Calidad", "export": "Exportación",
-                  "contact": "Contacto", "thanks": "Gracias"},
+                  "contact": "Contacto", "thanks": "Gracias",
+                  "founder": "Pedro Pablo Duchez Meyer"},
         "soon": "Próximamente",
         "skip": "Saltar al contenido",
         "menu": "Abrir menú",
@@ -95,7 +109,8 @@ T = {
                   "pepper": "Black pepper", "clove": "Clove", "cinnamon": "Cinnamon", "cacao": "Cacao",
                   "honey": "Honey", "vanilla": "Vanilla", "producers": "Producers", "about": "About",
                   "sustainability": "Sustainability", "quality": "Quality", "export": "Export",
-                  "contact": "Contact", "thanks": "Thank you"},
+                  "contact": "Contact", "thanks": "Thank you",
+                  "founder": "Pedro Pablo Duchez Meyer"},
         "soon": "Coming soon",
         "skip": "Skip to content",
         "menu": "Open menu",
@@ -244,7 +259,29 @@ def json_ld(key, lang, meta):
         "description": t["org_desc"],
         "areaServed": ["CA", "US"],
     }
+    person = {
+        "@type": "Person",
+        "@id": DOMAIN + "/pedro-pablo-duchez-meyer/#person",
+        "name": PERSON["name"],
+        "alternateName": PERSON["alternateName"],
+        "jobTitle": "Director" if lang == "en" else "Director",
+        "worksFor": {"@id": DOMAIN + "/#org"},
+        "affiliation": {"@type": "Organization", "name": "DAConsortium", "url": "https://www.da-consortium.com/"},
+        "image": DOMAIN + PERSON["image"],
+        "url": DOMAIN + path_of("founder", lang),
+        "sameAs": PERSON["sameAs"],
+        "knowsAbout": ["Agribusiness", "Spice export", "Cardamom", "Supply chains", "Strategic management", "Business structuring"],
+        "knowsLanguage": ["es", "en"],
+        "nationality": {"@type": "Country", "name": "Guatemala"},
+    }
+    org["employee"] = {"@id": person["@id"]}
     graph = [org]
+    if key in ("founder", "about"):
+        graph.append(person)
+    if key == "founder":
+        graph.append({"@type": "ProfilePage", "@id": DOMAIN + path_of("founder", lang) + "#page",
+                      "url": DOMAIN + path_of("founder", lang), "name": meta["title"], "inLanguage": lang,
+                      "mainEntity": {"@id": person["@id"]}, "about": {"@id": person["@id"]}})
     if key == "home":
         graph.append({"@type": "WebSite", "@id": DOMAIN + "/#web", "url": DOMAIN + "/", "name": "KAB EXPORT",
                       "inLanguage": lang, "publisher": {"@id": DOMAIN + "/#org"}})
@@ -287,7 +324,7 @@ def render(key, lang, meta, body):
     prod_links += "".join(f'<li><a href="{path_of(k, lang)}">{t["names"][k]} · {t["soon"].lower()}</a></li>'
                           for k in SOON_KEYS)
     company_links = "".join(f'<li><a href="{path_of(k, lang)}">{t["names"][k]}</a></li>'
-                            for k in ("producers", "about", "sustainability", "quality", "export"))
+                            for k in ("producers", "about", "founder", "sustainability", "quality", "export"))
     year = date.today().year
     return f"""<!doctype html>
 <html lang="{lang}">
@@ -300,14 +337,14 @@ def render(key, lang, meta, body):
 <link rel="alternate" hreflang="es" href="{DOMAIN}{path_of(key, "es")}">
 <link rel="alternate" hreflang="en" href="{DOMAIN}{path_of(key, "en")}">
 <link rel="alternate" hreflang="x-default" href="{DOMAIN}{path_of(key, "en")}">
-<meta property="og:type" content="website">
+<meta property="og:type" content="{"profile" if key == "founder" else "website"}">
 <meta property="og:site_name" content="KAB EXPORT">
 <meta property="og:title" content="{esc(meta["title"])}">
 <meta property="og:description" content="{esc(meta["description"])}">
 <meta property="og:url" content="{url}">
-<meta property="og:image" content="{DOMAIN}/assets/img/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+<meta property="og:image" content="{DOMAIN}{PERSON["image"] if key == "founder" else "/assets/img/og-image.png"}">
+<meta property="og:image:width" content="{800 if key == "founder" else 1200}">
+<meta property="og:image:height" content="{1000 if key == "founder" else 630}">
 <meta property="og:locale" content="{t["locale"]}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#1F3B2D">
