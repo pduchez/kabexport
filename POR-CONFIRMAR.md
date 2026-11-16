@@ -31,8 +31,13 @@ Estos puntos siguen pendientes de confirmar con KAB EXPORT.
 - [ ] Si KAB EXPORT necesita su propia certificación como comercializadora para vender como orgánico.
 
 ## Exportación
-- [ ] Incoterms que realmente se ofrecen. Hoy: EXW, FCA y FOB.
-- [ ] Puerto de embarque habitual.
+- [ ] Pedido mínimo por producto (hoy dice "por tarima, se confirma en la cotización", sin cifras).
+- [ ] Incoterms que se ofrecen. Hoy: EXW, FCA, FOB, CFR/CIF y DAP (entrega en bodega).
+- [ ] Puertos: Santo Tomás de Castilla y Puerto Barrios (Atlántico), Puerto Quetzal (Pacífico); transporte terrestre por México y aéreo para muestras.
+- [ ] Registro de las plantas de proceso ante la FDA (ADIRA, familia AC u otras) y quién actúa como importador en Canadá y en EE. UU.
+- [ ] Empaque: sacos de exportación paletizados.
+- [ ] Análisis de laboratorio externo antes del embarque, a pedido.
+- [ ] Visitas de compradores a las comunidades: confirmar con las organizaciones.
 
 ## Pendiente de agregar
 - [ ] Fotos reales de productores, comunidades, fincas, procesamiento y producto. Hoy el sitio usa ilustraciones.
