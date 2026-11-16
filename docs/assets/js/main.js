@@ -77,9 +77,10 @@
   // Copiar correo
   document.querySelectorAll('[data-copy]').forEach(function (b) {
     b.addEventListener('click', function () {
-      var label = b.textContent;
+      var el = b.querySelector('span') || b;  // con icono, cambia solo el texto
+      var label = el.textContent;
       var ok = lang === 'en' ? 'Copied' : 'Copiado';
-      var done = function (t) { b.textContent = t; setTimeout(function () { b.textContent = label; }, 1800); };
+      var done = function (t) { el.textContent = t; setTimeout(function () { el.textContent = label; }, 1800); };
       if (navigator.clipboard) navigator.clipboard.writeText(b.getAttribute('data-copy')).then(function () { done(ok); }, function () { done(label); });
     });
   });
@@ -89,5 +90,54 @@
   if (sel) {
     var m = location.search.match(/[?&]p=([a-z-]+)/);
     if (m) for (var i = 0; i < sel.options.length; i++) if (sel.options[i].getAttribute('data-k') === m[1]) sel.selectedIndex = i;
+  }
+  // Fichas de comunidad: imprimir, compartir nativo en el teléfono y visor de fotos
+  document.querySelectorAll('[data-print]').forEach(function (b) {
+    b.addEventListener('click', function () { window.print(); });
+  });
+  var wa = document.querySelector('.sh-wa');
+  if (wa && navigator.share && window.matchMedia('(pointer: coarse)').matches) {
+    var shareBtn = wa.cloneNode(true);
+    shareBtn.classList.remove('sh-wa');
+    shareBtn.removeAttribute('href'); shareBtn.removeAttribute('target');
+    shareBtn.querySelector('span').textContent = lang === 'en' ? 'Share' : 'Compartir';
+    shareBtn.setAttribute('role', 'button');
+    shareBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      navigator.share({ title: document.title, url: location.href.split('#')[0] }).catch(function () {});
+    });
+    wa.parentNode.insertBefore(shareBtn, wa.nextSibling);
+  }
+  var viewer = document.querySelector('.viewer'), photosEl = document.getElementById('photos');
+  if (viewer && photosEl && viewer.showModal) {
+    var photos = JSON.parse(photosEl.textContent), order = [], pos = 0;
+    document.querySelectorAll('[data-zoom]').forEach(function (b) {
+      var k = b.getAttribute('data-zoom');
+      if (order.indexOf(k) < 0) order.push(k);
+    });
+    var vImg = viewer.querySelector('img'), vCap = viewer.querySelector('figcaption');
+    var show = function (i) {
+      pos = (i + order.length) % order.length;
+      var p = photos[order[pos]];
+      vImg.src = p.src; vImg.alt = p.cap; vCap.textContent = p.cap;
+    };
+    document.querySelectorAll('[data-zoom]').forEach(function (b) {
+      b.addEventListener('click', function () { show(order.indexOf(b.getAttribute('data-zoom'))); viewer.showModal(); });
+    });
+    viewer.querySelector('.v-close').addEventListener('click', function () { viewer.close(); });
+    viewer.querySelector('.v-prev').addEventListener('click', function () { show(pos - 1); });
+    viewer.querySelector('.v-next').addEventListener('click', function () { show(pos + 1); });
+    viewer.addEventListener('click', function (e) { if (e.target === viewer || e.target.tagName === 'FIGURE') viewer.close(); });
+    viewer.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') show(pos - 1);
+      if (e.key === 'ArrowRight') show(pos + 1);
+    });
+    var x0 = null;
+    viewer.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    viewer.addEventListener('touchend', function (e) {
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 50) show(pos + (dx < 0 ? 1 : -1));
+    });
   }
 })();

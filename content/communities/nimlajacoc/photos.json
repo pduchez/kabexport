@@ -1,0 +1,110 @@
+{
+ "arboles-nativos": [
+  480,
+  640
+ ],
+ "base-de-la-planta": [
+  1200,
+  1600
+ ],
+ "beneficio-organico": [
+  1200,
+  1600
+ ],
+ "beneficio-por-dentro": [
+  1200,
+  1600
+ ],
+ "bosque-en-niebla": [
+  640,
+  480
+ ],
+ "capsulas-abiertas": [
+  1200,
+  1600
+ ],
+ "capsulas-y-flor": [
+  1200,
+  1600
+ ],
+ "cosecha-a-mano": [
+  640,
+  480
+ ],
+ "dosel-y-cardamomo": [
+  480,
+  640
+ ],
+ "flor": [
+  1200,
+  1600
+ ],
+ "flores-al-pie": [
+  1200,
+  1600
+ ],
+ "fresco-de-cerca": [
+  1200,
+  1600
+ ],
+ "fresco-en-mano": [
+  1200,
+  1600
+ ],
+ "luz-en-el-bosque": [
+  480,
+  640
+ ],
+ "niebla-en-el-cardamomal": [
+  480,
+  640
+ ],
+ "pesaje": [
+  1200,
+  1600
+ ],
+ "pila-1-organico": [
+  1600,
+  1200
+ ],
+ "pila-con-fresco": [
+  1200,
+  1600
+ ],
+ "racimos": [
+  1200,
+  1600
+ ],
+ "racimos-con-flor": [
+  1200,
+  1600
+ ],
+ "renuevo": [
+  480,
+  640
+ ],
+ "revisando-el-secado": [
+  1200,
+  1600
+ ],
+ "salida-por-el-camino": [
+  1200,
+  1600
+ ],
+ "seco-en-mano": [
+  1200,
+  1600
+ ],
+ "seco-en-pala": [
+  1200,
+  1600
+ ],
+ "seco-y-pilas": [
+  1200,
+  1600
+ ],
+ "sendero": [
+  480,
+  640
+ ]
+}

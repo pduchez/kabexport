@@ -49,3 +49,11 @@ Estos puntos siguen pendientes de confirmar con KAB EXPORT.
 - [ ] Fotos reales de productores, comunidades, fincas, procesamiento y producto. Hoy el sitio usa ilustraciones.
 - [ ] Teléfono o WhatsApp, si se quieren publicar.
 - [ ] Dirección de oficina, si se quiere publicar.
+
+## Ficha de Nimlajacoc (/producers/nimlajacoc/)
+
+- Municipio exacto (la ficha dice «norte de Alta Verapaz»).
+- Copia del certificado orgánico vigente, para publicarla en la ficha.
+- Familias productoras, área de cardamomo, número de matas, cardamomo seco por temporada, capacidad de secado por tanda y meses de cosecha.
+- Perfiles de productores, cada uno con su consentimiento (ver COMUNIDADES.md).
+- Consentimiento de las personas que aparecen en las fotos de cosecha y secado; una foto con el rostro visible quedó fuera hasta tenerlo.

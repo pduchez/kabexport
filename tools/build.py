@@ -16,8 +16,12 @@ El inglés va en la raíz (/) y el español en /es/.
 """
 import json
 import re
+import sys
 from datetime import date
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import communities  # noqa: E402  fichas por comunidad
 
 ROOT = Path(__file__).resolve().parent.parent
 CONTENT = ROOT / "content"
@@ -224,6 +228,25 @@ def landscape(big=False):
             '</svg></div>')
 
 
+# Fichas de comunidad: cada una se registra como página (ver tools/communities.py)
+COMMUNITIES = communities.load()
+for _k, _c in COMMUNITIES.items():
+    PAGES[_k] = communities.paths(_c)
+    for _lang in ("es", "en"):
+        T[_lang]["names"][_k] = _c["name"]
+# Fichas que se anuncian en la página de productores mientras se preparan
+SOON = {"en": ["Lachuá region", "Raxruhá"], "es": ["Región de Lachuá", "Raxruhá"]}
+
+
+def parent_of(key):
+    """Página madre en las migas de pan."""
+    if key in PRODUCT_KEYS:
+        return "products"
+    if key in COMMUNITIES:
+        return "producers"
+    return None
+
+
 def path_of(key, lang):
     return PAGES[key][0 if lang == "es" else 1]
 
@@ -238,6 +261,7 @@ def read_page(lang, key):
     for k, svg in ICONS.items():
         body = body.replace("{{icon:%s}}" % k, svg)
     body = body.replace("{{email}}", EMAIL)
+    body = body.replace("{{communities}}", communities.cards(COMMUNITIES, lang, SOON[lang]))
     for k in PAGES:
         body = body.replace("{{url:%s}}" % k, path_of(k, lang))
     return meta, body
@@ -282,13 +306,25 @@ def json_ld(key, lang, meta):
         graph.append({"@type": "ProfilePage", "@id": DOMAIN + path_of("founder", lang) + "#page",
                       "url": DOMAIN + path_of("founder", lang), "name": meta["title"], "inLanguage": lang,
                       "mainEntity": {"@id": person["@id"]}, "about": {"@id": person["@id"]}})
+    if key in COMMUNITIES:
+        c = COMMUNITIES[key]
+        place = {"@type": "Place", "@id": DOMAIN + path_of(key, "en") + "#place", "name": c["name"],
+                 "description": c["hero"]["lede"][lang],
+                 "containedInPlace": {"@type": "AdministrativeArea", "name": "Alta Verapaz, Guatemala"},
+                 "image": [DOMAIN + communities.IMG + "/" + c["slug"] + "/" + n + ".jpg" for n in c["gallery"][:6]]}
+        graph.append(place)
+        graph.append({"@type": "WebPage", "@id": DOMAIN + path_of(key, lang) + "#page", "url": DOMAIN + path_of(key, lang),
+                      "name": meta["title"], "inLanguage": lang, "about": {"@id": place["@id"]},
+                      "dateModified": c["updated"], "publisher": {"@id": DOMAIN + "/#org"},
+                      "reviewedBy": {"@id": person["@id"]}})
+        graph.append(person)
     if key == "home":
         graph.append({"@type": "WebSite", "@id": DOMAIN + "/#web", "url": DOMAIN + "/", "name": "KAB EXPORT",
                       "inLanguage": lang, "publisher": {"@id": DOMAIN + "/#org"}})
     else:
         crumbs = [("home", path_of("home", lang))]
-        if key in PRODUCT_KEYS:
-            crumbs.append(("products", path_of("products", lang)))
+        if parent_of(key):
+            crumbs.append((parent_of(key), path_of(parent_of(key), lang)))
         crumbs.append((key, path_of(key, lang)))
         graph.append({"@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": i + 1, "name": t["names"][k], "item": DOMAIN + p}
@@ -301,8 +337,8 @@ def crumbs_html(key, lang):
         return ""
     t = T[lang]
     parts = [f'<a href="{path_of("home", lang)}">{t["names"]["home"]}</a>']
-    if key in PRODUCT_KEYS:
-        parts.append(f'<a href="{path_of("products", lang)}">{t["names"]["products"]}</a>')
+    if parent_of(key):
+        parts.append(f'<a href="{path_of(parent_of(key), lang)}">{t["names"][parent_of(key)]}</a>')
     parts.append(f'<span aria-current="page">{t["names"][key]}</span>')
     return '<nav class="crumbs" aria-label="Breadcrumb">' + '<span aria-hidden="true">/</span>'.join(parts) + "</nav>"
 
@@ -311,7 +347,7 @@ def render(key, lang, meta, body):
     t = T[lang]
     other = "en" if lang == "es" else "es"
     url = DOMAIN + path_of(key, lang)
-    active = "products" if key in PRODUCT_KEYS else key
+    active = parent_of(key) or key
     nav = "".join(
         f'<li><a href="{path_of(k, lang)}"{" aria-current=\"page\"" if k == active else ""}>{label}</a></li>'
         for k, label in t["nav"])
@@ -326,6 +362,10 @@ def render(key, lang, meta, body):
     company_links = "".join(f'<li><a href="{path_of(k, lang)}">{t["names"][k]}</a></li>'
                             for k in ("producers", "about", "founder", "sustainability", "quality", "export"))
     year = date.today().year
+    og_img = PERSON["image"] if key == "founder" else "/assets/img/og-image.png"
+    if key in COMMUNITIES:
+        og_img = communities.og_image(COMMUNITIES[key])
+    body_class = "page-community" if key in COMMUNITIES else f"page-{key}"
     return f"""<!doctype html>
 <html lang="{lang}">
 <head>
@@ -342,7 +382,7 @@ def render(key, lang, meta, body):
 <meta property="og:title" content="{esc(meta["title"])}">
 <meta property="og:description" content="{esc(meta["description"])}">
 <meta property="og:url" content="{url}">
-<meta property="og:image" content="{DOMAIN}{PERSON["image"] if key == "founder" else "/assets/img/og-image.png"}">
+<meta property="og:image" content="{DOMAIN}{og_img}">
 <meta property="og:image:width" content="{800 if key == "founder" else 1200}">
 <meta property="og:image:height" content="{1000 if key == "founder" else 630}">
 <meta property="og:locale" content="{t["locale"]}">
@@ -355,7 +395,7 @@ def render(key, lang, meta, body):
 <link rel="stylesheet" href="/assets/css/styles.css">
 <script type="application/ld+json">{json_ld(key, lang, meta)}</script>
 </head>
-<body class="page-{key}">
+<body class="{body_class}">
 <a class="skip" href="#main">{t["skip"]}</a>
 <header class="site-header">
   <div class="wrap nav">
@@ -450,7 +490,13 @@ def main():
     count = 0
     for lang in ("en", "es"):
         for key in PAGES:
-            meta, body = read_page(lang, key)
+            if key in COMMUNITIES:
+                c = COMMUNITIES[key]
+                meta = c["meta"][lang]
+                body = communities.body(key, c, lang, DOMAIN + path_of(key, lang), "{{crumbs}}",
+                                        lambda k, _l=lang: path_of(k, _l), path_of("founder", lang))
+            else:
+                meta, body = read_page(lang, key)
             write(path_of(key, lang), render(key, lang, meta, body))
             count += 1
     redirects = legacy_redirects()

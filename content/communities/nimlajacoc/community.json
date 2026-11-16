@@ -1,0 +1,168 @@
+{
+  "slug": "nimlajacoc",
+  "name": "Nimlajacoc",
+  "updated": "2026-11-16",
+  "field_record": {"en": "November 2026", "es": "noviembre de 2026"},
+  "crops": ["cardamom"],
+  "place": {
+    "en": "Northern Alta Verapaz, Guatemala",
+    "es": "Norte de Alta Verapaz, Guatemala"
+  },
+  "meta": {
+    "en": {
+      "title": "Nimlajacoc: shade-grown cardamom, northern Alta Verapaz | KAB EXPORT",
+      "description": "Field record of Nimlajacoc, a cardamom-growing community in northern Alta Verapaz, Guatemala: grown under native forest, picked by hand and dried at origin. What we have seen, and what we are still documenting."
+    },
+    "es": {
+      "title": "Nimlajacoc: cardamomo bajo sombra, norte de Alta Verapaz | KAB EXPORT",
+      "description": "Ficha de campo de Nimlajacoc, comunidad productora de cardamomo del norte de Alta Verapaz, Guatemala: cultivado bajo bosque nativo, cosechado a mano y secado en origen. Lo que hemos visto y lo que aún estamos documentando."
+    }
+  },
+  "hero": {
+    "photo": "racimos-con-flor",
+    "inset": "bosque-en-niebla",
+    "tagline": {"en": "Cardamom from the forest floor", "es": "Cardamomo del suelo del bosque"},
+    "lede": {
+      "en": "In Nimlajacoc, cardamom grows beneath native trees, is picked by hand and is dried in the producers' own facility. This page shows what we have seen there with our own eyes, and marks clearly what we are still documenting.",
+      "es": "En Nimlajacoc el cardamomo crece bajo árboles nativos, se cosecha a mano y se seca en las instalaciones de los propios productores. Esta página muestra lo que hemos visto ahí con nuestros propios ojos y marca con claridad lo que aún estamos documentando."
+    }
+  },
+  "ledger": [
+    {
+      "status": "seen",
+      "photo": "dosel-y-cardamomo",
+      "title": {"en": "Grown under native forest shade", "es": "Cultivado bajo sombra de bosque nativo"},
+      "text": {
+        "en": "Cardamom grows in the understory, beneath tall native trees. We walked the plots on our visit.",
+        "es": "El cardamomo crece en el sotobosque, bajo árboles nativos altos. Recorrimos las parcelas en nuestra visita."
+      }
+    },
+    {
+      "status": "seen",
+      "photo": "cosecha-a-mano",
+      "title": {"en": "Picked by hand, plant by plant", "es": "Cosechado a mano, planta por planta"},
+      "text": {
+        "en": "Harvesters work plant by plant, picking ripe capsules from the panicles at the base of each plant.",
+        "es": "Los cosechadores trabajan planta por planta y cortan las cápsulas maduras de los racimos que crecen al pie de cada mata."
+      }
+    },
+    {
+      "status": "seen",
+      "photo": "capsulas-abiertas",
+      "title": {"en": "Ripeness checked in the field", "es": "Madurez revisada en el campo"},
+      "text": {
+        "en": "A ripe capsule holds dark seeds; a pale one is still young. Opening a few capsules tells the harvester whether a plant is ready.",
+        "es": "Una cápsula madura guarda semillas oscuras; una pálida todavía está tierna. Abrir unas cuantas cápsulas le dice al cosechador si la mata está lista."
+      }
+    },
+    {
+      "status": "seen",
+      "photo": "pila-con-fresco",
+      "title": {"en": "Dried at origin, in the producers' own facility", "es": "Secado en origen, en las instalaciones de los productores"},
+      "text": {
+        "en": "Fresh capsules are dried in heated drying bins inside the producers' own facility in the community.",
+        "es": "Las cápsulas frescas se secan en pilas de secado con calor, dentro de las instalaciones de los productores en la comunidad."
+      }
+    },
+    {
+      "status": "seen",
+      "photo": "pila-1-organico",
+      "title": {"en": "Organic product handled apart", "es": "Producto orgánico manejado aparte"},
+      "text": {
+        "en": "The drying bins and the processing area are labelled for organic product, so organic lots are handled on their own.",
+        "es": "Las pilas de secado y el área de proceso están rotuladas para producto orgánico, de modo que los lotes orgánicos se manejan por separado."
+      }
+    },
+    {
+      "status": "seen",
+      "photo": "pesaje",
+      "title": {"en": "Every sack weighed", "es": "Cada saco, pesado"},
+      "text": {
+        "en": "Sacks are weighed one by one on a digital hanging scale inside the facility.",
+        "es": "Los sacos se pesan uno por uno en una báscula digital colgante dentro de las instalaciones."
+      }
+    },
+    {
+      "status": "pending",
+      "title": {"en": "Organic certificate", "es": "Certificado orgánico"},
+      "text": {
+        "en": "The producers hold third-party organic certification. We will publish a copy of the current certificate here.",
+        "es": "Los productores cuentan con certificación orgánica de un tercero. Publicaremos aquí una copia del certificado vigente."
+      }
+    },
+    {
+      "status": "pending",
+      "title": {"en": "Producers, plots and capacity", "es": "Productores, parcelas y capacidad"},
+      "text": {
+        "en": "We are documenting each producing family, the size of their plots and what they harvest, with their consent.",
+        "es": "Estamos documentando cada familia productora, el tamaño de sus parcelas y lo que cosechan, con su consentimiento."
+      }
+    }
+  ],
+  "journey": [
+    {"photo": "bosque-en-niebla", "title": {"en": "Shade", "es": "Sombra"},
+     "text": {"en": "Native trees keep the soil cool and moist. Cardamom grows beneath them.", "es": "Los árboles nativos mantienen el suelo fresco y húmedo. El cardamomo crece debajo de ellos."}},
+    {"photo": "flor", "title": {"en": "Flower", "es": "Flor"},
+     "text": {"en": "Each capsule starts as a small white flower veined in purple, close to the ground.", "es": "Cada cápsula empieza como una pequeña flor blanca con vetas moradas, cerca del suelo."}},
+    {"photo": "racimos", "title": {"en": "Capsules", "es": "Cápsulas"},
+     "text": {"en": "The panicles run along the ground, heavy with green capsules.", "es": "Los racimos corren a ras del suelo, cargados de cápsulas verdes."}},
+    {"photo": "cosecha-a-mano", "title": {"en": "Harvest", "es": "Cosecha"},
+     "text": {"en": "Picked by hand into woven bags, plant by plant.", "es": "Se cortan a mano en morrales tejidos, mata por mata."}},
+    {"photo": "capsulas-abiertas", "title": {"en": "Ripeness", "es": "Madurez"},
+     "text": {"en": "Dark seeds mean a ripe capsule. Pale seeds mean wait.", "es": "Semilla oscura, cápsula madura. Semilla pálida, hay que esperar."}},
+    {"photo": "pila-con-fresco", "title": {"en": "Drying", "es": "Secado"},
+     "text": {"en": "Fresh capsules go into heated drying bins at the community's facility.", "es": "Las cápsulas frescas entran a las pilas de secado del beneficio de la comunidad."}},
+    {"photo": "seco-en-mano", "title": {"en": "Dried", "es": "Seco"},
+     "text": {"en": "Once dry, the capsules turn firm and olive green, ready to be sorted and graded.", "es": "Ya secas, las cápsulas quedan firmes y verde olivo, listas para clasificarse."}},
+    {"photo": "pesaje", "title": {"en": "Weighed", "es": "Pesado"},
+     "text": {"en": "Each sack goes on the scale before it is stored.", "es": "Cada saco pasa por la báscula antes de almacenarse."}},
+    {"photo": "salida-por-el-camino", "title": {"en": "On the road", "es": "En camino"},
+     "text": {"en": "Sacks leave the community by pickup, along rural roads.", "es": "Los sacos salen de la comunidad en pickup, por caminos rurales."}}
+  ],
+  "figures": [
+    {"label": {"en": "Main crop", "es": "Cultivo principal"}, "value": {"en": "Green cardamom", "es": "Cardamomo verde"}, "note": {"en": "Elettaria cardamomum", "es": "Elettaria cardamomum"}},
+    {"label": {"en": "Processing", "es": "Proceso"}, "value": {"en": "Dried at origin", "es": "Secado en origen"}, "note": {"en": "In the producers' own facility", "es": "En el beneficio de los productores"}},
+    {"label": {"en": "Producing families", "es": "Familias productoras"}, "value": null},
+    {"label": {"en": "Area under cardamom", "es": "Área de cardamomo"}, "value": null},
+    {"label": {"en": "Cardamom plants", "es": "Matas de cardamomo"}, "value": null},
+    {"label": {"en": "Dried cardamom per season", "es": "Cardamomo seco por temporada"}, "value": null},
+    {"label": {"en": "Drying capacity per batch", "es": "Capacidad de secado por tanda"}, "value": null},
+    {"label": {"en": "Harvest months", "es": "Meses de cosecha"}, "value": null}
+  ],
+  "producers": [],
+  "gallery": [
+    "racimos-con-flor", "capsulas-y-flor", "arboles-nativos", "beneficio-por-dentro",
+    "fresco-en-mano", "flores-al-pie", "seco-y-pilas", "luz-en-el-bosque",
+    "revisando-el-secado", "fresco-de-cerca", "renuevo", "seco-en-pala",
+    "niebla-en-el-cardamomal", "base-de-la-planta", "sendero", "beneficio-organico"
+  ],
+  "captions": {
+    "racimos-con-flor": {"en": "Capsules and flowers at the base of a cardamom plant.", "es": "Cápsulas y flores al pie de una mata de cardamomo."},
+    "capsulas-y-flor": {"en": "Young capsules next to an open flower.", "es": "Cápsulas tiernas junto a una flor abierta."},
+    "base-de-la-planta": {"en": "Panicles spreading from the base of the plant.", "es": "Racimos que salen del pie de la mata."},
+    "flores-al-pie": {"en": "Flowers among the stems, close to the ground.", "es": "Flores entre los tallos, a ras del suelo."},
+    "pila-1-organico": {"en": "Drying bin labelled for organic product.", "es": "Pila de secado rotulada para producto orgánico."},
+    "beneficio-por-dentro": {"en": "Inside the drying facility: two heated bins and the sorting table.", "es": "Dentro del beneficio: dos pilas de secado y la mesa de clasificación."},
+    "pila-con-fresco": {"en": "Fresh capsules in a drying bin.", "es": "Cápsulas frescas en una pila de secado."},
+    "renuevo": {"en": "A new cardamom plant, recently set in the ground.", "es": "Una mata nueva de cardamomo, recién sembrada."},
+    "capsulas-abiertas": {"en": "Opened capsules: dark seeds are ripe, pale seeds are still young.", "es": "Cápsulas abiertas: la semilla oscura está madura y la pálida todavía tierna."},
+    "racimos": {"en": "Panicles heavy with green capsules.", "es": "Racimos cargados de cápsulas verdes."},
+    "seco-en-pala": {"en": "Dried cardamom on a scoop, as it comes out of the bin.", "es": "Cardamomo seco en la pala, tal como sale de la pila."},
+    "revisando-el-secado": {"en": "Checking the drying cardamom by hand.", "es": "Revisando a mano el cardamomo en secado."},
+    "beneficio-organico": {"en": "Sign for the organic processing area.", "es": "Rótulo del área de beneficio orgánico."},
+    "salida-por-el-camino": {"en": "Sacks leaving the community.", "es": "Sacos saliendo de la comunidad."},
+    "fresco-de-cerca": {"en": "Freshly picked capsules, up close.", "es": "Cápsulas recién cortadas, de cerca."},
+    "bosque-en-niebla": {"en": "Morning mist over the forest and the cardamom plots.", "es": "Neblina de la mañana sobre el bosque y el cardamomal."},
+    "flor": {"en": "A cardamom flower.", "es": "Una flor de cardamomo."},
+    "seco-y-pilas": {"en": "Dried cardamom on the sorting table, with the drying bins behind.", "es": "Cardamomo seco en la mesa de clasificación, con las pilas de secado detrás."},
+    "pesaje": {"en": "A sack on the scale.", "es": "Un saco en la báscula."},
+    "cosecha-a-mano": {"en": "Harvesting by hand.", "es": "Cosecha a mano."},
+    "seco-en-mano": {"en": "Dried capsules: firm and olive green.", "es": "Cápsulas secas: firmes y verde olivo."},
+    "fresco-en-mano": {"en": "A handful of fresh capsules from the drying bin.", "es": "Un puñado de cápsulas frescas de la pila de secado."},
+    "dosel-y-cardamomo": {"en": "Cardamom beneath the canopy of native trees.", "es": "Cardamomo bajo el dosel de árboles nativos."},
+    "sendero": {"en": "A path through the cardamom plots.", "es": "Un sendero entre las parcelas de cardamomo."},
+    "luz-en-el-bosque": {"en": "Light through the canopy.", "es": "Luz entre el dosel."},
+    "arboles-nativos": {"en": "Tall native trees shade the plots.", "es": "Árboles nativos altos dan sombra a las parcelas."},
+    "niebla-en-el-cardamomal": {"en": "Rainy-season mist in the cardamom plots.", "es": "Neblina de invierno en el cardamomal."}
+  }
+}
