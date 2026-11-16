@@ -164,6 +164,51 @@ FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600&display=swap">')
 
 
+def _ridge(seed, base, amp, n, width=1440):
+    """Línea de cerros: picos redondeados, como los conos kársticos de Alta Verapaz."""
+    import random
+    rnd = random.Random(seed)
+    xs = sorted({0, width} | {int(width * (i + rnd.uniform(-0.3, 0.3)) / n) for i in range(1, n)})
+    d = f"M0 320 L0 {base}"
+    for a, b in zip(xs, xs[1:]):
+        h = base - amp * rnd.uniform(0.35, 1.0)
+        d += f" C{a + (b - a) * 0.15:.0f} {h:.0f} {a + (b - a) * 0.85:.0f} {h:.0f} {b} {base + rnd.uniform(-6, 6):.0f}"
+    return d + f" L{width} 320 Z"
+
+
+def _canopy(seed, y, rmin, rmax, width=1440):
+    """Copas de árboles en primer plano: círculos que se enciman."""
+    import random
+    rnd = random.Random(seed)
+    out, x = [], -20
+    while x < width + 40:
+        r = rnd.uniform(rmin, rmax)
+        out.append(f'<circle cx="{x:.0f}" cy="{y - r * rnd.uniform(0.2, 0.6):.0f}" r="{r:.0f}"/>')
+        x += r * rnd.uniform(0.9, 1.4)
+    return "".join(out)
+
+
+def landscape(big=False):
+    """Paisaje de Alta Verapaz dibujado en SVG: cerros, neblina, sol y copas de árboles."""
+    cls = "scape scape-big" if big else "scape"
+    sun = ('<circle class="sun-glow" cx="1110" cy="150" r="150" fill="url(#halo)"/><circle class="sun" cx="1110" cy="150" r="30"/>' if big else
+           '<circle class="sun-glow" cx="1200" cy="222" r="80" fill="url(#halo)"/><circle class="sun" cx="1200" cy="222" r="18"/>')
+    seeds = "".join(f'<circle class="seed" cx="{x}" cy="{y}" r="{r}" style="animation-delay:{dl}s"/>'
+                    for x, y, r, dl in [(220, 120, 2.2, 0), (420, 80, 1.6, 2.1), (640, 150, 2, 1.2), (860, 70, 1.4, 3.3),
+                                        (980, 190, 2.4, .6), (1240, 90, 1.8, 2.7), (1350, 200, 1.5, 1.8), (120, 210, 1.7, 3.9)]) if big else ""
+    return (f'<div class="{cls}" aria-hidden="true"><svg viewBox="0 0 1440 320" preserveAspectRatio="xMidYMax slice">'
+            '<defs><radialGradient id="halo"><stop offset="0" stop-color="#E9B866" stop-opacity=".55"/><stop offset="1" stop-color="#E9B866" stop-opacity="0"/></radialGradient>'
+            '<filter id="blur" x="-20%" y="-200%" width="140%" height="500%"><feGaussianBlur stdDeviation="12"/></filter></defs>'
+            + sun + seeds +
+            f'<path class="l1" d="{_ridge(3, 205, 110, 14)}"/>'
+            '<ellipse class="mist m1" cx="420" cy="225" rx="520" ry="16" filter="url(#blur)"/>'
+            f'<path class="l2" d="{_ridge(7, 250, 95, 18)}"/>'
+            '<ellipse class="mist m2" cx="1050" cy="262" rx="560" ry="14" filter="url(#blur)"/>'
+            f'<path class="l3" d="{_ridge(11, 288, 60, 24)}"/>'
+            f'<g class="l4">{_canopy(5, 330, 22, 46)}</g>'
+            '</svg></div>')
+
+
 def path_of(key, lang):
     return PAGES[key][0 if lang == "es" else 1]
 
@@ -235,6 +280,8 @@ def render(key, lang, meta, body):
         for k, label in t["nav"])
     robots = '<meta name="robots" content="noindex">\n' if key in NO_INDEX else ""
     body = body.replace("{{crumbs}}", crumbs_html(key, lang))
+    body = body.replace('<section class="hero">', '<section class="hero">' + landscape(big=True), 1)
+    body = body.replace('<section class="page-hero">', '<section class="page-hero">' + landscape(), 1)
     prod_links = "".join(f'<li><a href="{path_of(k, lang)}">{t["names"][k]}</a></li>'
                          for k in PRODUCT_KEYS if k not in SOON_KEYS)
     prod_links += "".join(f'<li><a href="{path_of(k, lang)}">{t["names"][k]} · {t["soon"].lower()}</a></li>'

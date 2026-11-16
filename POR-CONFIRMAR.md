@@ -39,6 +39,12 @@ Estos puntos siguen pendientes de confirmar con KAB EXPORT.
 - [ ] Análisis de laboratorio externo antes del embarque, a pedido.
 - [ ] Visitas de compradores a las comunidades: confirmar con las organizaciones.
 
+## Perfil del director (Nosotros e Inicio)
+- [ ] Cargo en KAB EXPORT: hoy dice "Director".
+- [ ] La cita "Quienes cultivan una especia deben ser los primeros en beneficiarse de ella…" se redactó a partir de lo que Pedro Pablo dijo sobre el enfoque social: validarla.
+- [ ] Datos tomados de destinopropiedades.com y da-consortium.com: 30 años, 3 industrias, Administración de Empresas y Maestría en Innovación, enlace a LinkedIn.
+- [ ] Mención de la finca de cardamomo orgánico en El Salvador y de la finca propia en Alta Verapaz.
+
 ## Pendiente de agregar
 - [ ] Fotos reales de productores, comunidades, fincas, procesamiento y producto. Hoy el sitio usa ilustraciones.
 - [ ] Teléfono o WhatsApp, si se quieren publicar.
