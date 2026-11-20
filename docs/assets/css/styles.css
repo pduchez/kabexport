@@ -558,6 +558,7 @@ a.cf-card:hover { transform: translateY(-3px); box-shadow: 0 18px 36px -22px rgb
 
 /* Ubicación de la comunidad */
 .loc-block { padding-bottom: 0; }
+.loc-block:last-child { padding-bottom: clamp(56px, 8vw, 96px); }
 .loc { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 24px; overflow: hidden; }
 .loc-map { position: relative; display: block; background: #17301F; }
 .locmap { display: block; width: 100%; height: 100%; min-height: 300px; }

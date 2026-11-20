@@ -212,8 +212,11 @@ def _dms(v, pos, neg):
     return f"{deg}°{m:02d}′{sec:04.1f}″ {pos if v >= 0 else neg}"
 
 
-def location(c, lang):
-    """Tarjeta de ubicación: mapa dibujado con coordenadas reales y enlaces a Google Earth y Maps."""
+def location(c, lang, facts=None):
+    """Tarjeta de ubicación: mapa dibujado con coordenadas reales y enlaces a Google Earth y Maps.
+
+    `facts` reemplaza la lista de datos bajo las coordenadas (lo usan las fichas de producto,
+    donde «a X km de Laguna Lachuá» no aplica)."""
     loc = c.get("location")
     if not loc:
         return ""
@@ -263,6 +266,11 @@ def location(c, lang):
       <g class="compass" transform="translate({W - 40} 44)"><path d="M0-22 7 6 0 1-7 6Z"/><text y="22" text-anchor="middle">N</text></g>
       <g class="scale" transform="translate(24 {H - 26})"><path d="M0 0h{km10:.1f}M0-5v10M{km10:.1f}-5v10"/><text x="{km10 + 8:.1f}" y="5">10 {t["km"]}</text></g>
     </svg>"""
+    if facts is None:
+        facts = [c["place"][lang], t["loc_from"].format(km=km_coban), t["loc_lake"].format(km=km_lake)]
+    else:
+        facts = [f.format(km_coban=km_coban) for f in facts]
+    facts_html = "".join(f"<li>{escape(f)}</li>" for f in facts)
     earth = escape(loc["earth"])
     maps = f"https://www.google.com/maps/search/?api=1&query={lat},{lon}"
     return f"""<section class="block loc-block" id="location">
@@ -273,7 +281,7 @@ def location(c, lang):
         <div class="eyebrow">{t["loc_eyebrow"]}</div>
         <h2>{t["loc_title"].format(name=name)}</h2>
         <p class="loc-coords"><span>{_dms(lat, "N", "S")}</span><span>{_dms(lon, "E", "W")}</span></p>
-        <ul class="loc-facts"><li>{escape(c["place"][lang])}</li><li>{t["loc_from"].format(km=km_coban)}</li><li>{t["loc_lake"].format(km=km_lake)}</li></ul>
+        <ul class="loc-facts">{facts_html}</ul>
         <div class="loc-btns"><a class="btn btn-honey" href="{earth}" target="_blank" rel="noopener">{t["loc_earth"]} ↗</a><a class="btn btn-line" href="{escape(maps)}" target="_blank" rel="noopener">{t["loc_maps"]} ↗</a></div>
       </div>
     </div>

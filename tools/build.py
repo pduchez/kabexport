@@ -253,6 +253,24 @@ def path_of(key, lang):
     return PAGES[key][0 if lang == "es" else 1]
 
 
+# Orígenes de producto con mapa propio (fichas de producto, no de comunidad)
+ORIGINS = {
+    "lachua": {
+        "name": "Lachuá",
+        "location": {"lat": 15.9208, "lon": -90.6721,
+                     "earth": "https://earth.google.com/web/@15.9208,-90.6721,180a,14000d,35y,0h,45t,0r"},
+        "facts": {
+            "en": ["Lachuá Ecoregion, Cobán, Alta Verapaz",
+                   "{km_coban} km north-west of Cobán, in a straight line",
+                   "Ramsar Wetland of International Importance since 2006"],
+            "es": ["Ecorregión Lachuá, Cobán, Alta Verapaz",
+                   "{km_coban} km al noroeste de Cobán, en línea recta",
+                   "Humedal de importancia internacional (Ramsar) desde 2006"],
+        },
+    },
+}
+
+
 def read_page(lang, key):
     raw = (CONTENT / lang / f"{key}.html").read_text(encoding="utf-8")
     m = re.match(r"\s*<!--meta\s+(\{.*?\})\s*-->\s*", raw, re.S)
@@ -265,6 +283,8 @@ def read_page(lang, key):
     body = body.replace("{{email}}", EMAIL)
     body = body.replace("{{communities}}", communities.cards(COMMUNITIES, lang, SOON[lang]))
     body = body.replace("{{visits}}", visits.section(VISITS, lang, path_of("contact", lang)))
+    for k, o in ORIGINS.items():
+        body = body.replace("{{origin:%s}}" % k, communities.location(o, lang, o["facts"][lang]))
     for k in PAGES:
         body = body.replace("{{url:%s}}" % k, path_of(k, lang))
     return meta, body
