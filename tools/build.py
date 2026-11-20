@@ -237,7 +237,7 @@ for _k, _c in COMMUNITIES.items():
     for _lang in ("es", "en"):
         T[_lang]["names"][_k] = _c["name"]
 # Fichas que se anuncian en la página de productores mientras se preparan
-SOON = {"en": ["Lachuá region", "Raxruhá"], "es": ["Región de Lachuá", "Raxruhá"]}
+SOON = {"en": ["Raxruhá"], "es": ["Raxruhá"]}
 
 
 def parent_of(key):

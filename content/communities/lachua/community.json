@@ -1,0 +1,462 @@
+{
+ "slug": "lachua",
+ "name": "Lachuá",
+ "updated": "2026-11-20",
+ "field_record": {
+  "en": "November 2026",
+  "es": "noviembre de 2026"
+ },
+ "crops": [
+  "cacao"
+ ],
+ "place": {
+  "en": "Lachuá Ecoregion, Cobán, Alta Verapaz, Guatemala",
+  "es": "Ecorregión Lachuá, Cobán, Alta Verapaz, Guatemala"
+ },
+ "location": {
+  "lat": 15.9208,
+  "lon": -90.6721,
+  "earth": "https://earth.google.com/web/@15.9208,-90.6721,180a,14000d,35y,0h,45t,0r"
+ },
+ "location_facts": {
+  "en": [
+   "Lachuá Ecoregion, Cobán, Alta Verapaz",
+   "{km_coban} km north-west of Cobán, in a straight line",
+   "Ramsar Wetland of International Importance since 2006"
+  ],
+  "es": [
+   "Ecorregión Lachuá, Cobán, Alta Verapaz",
+   "{km_coban} km al noroeste de Cobán, en línea recta",
+   "Humedal de importancia internacional (Ramsar) desde 2006"
+  ]
+ },
+ "meta": {
+  "en": {
+   "title": "Lachuá: fine Criollo and Trinitario cacao, Alta Verapaz | KAB EXPORT",
+   "description": "Field record of fine cacao from the Lachuá region, Alta Verapaz, Guatemala: a Q'eqchi' family enterprise that grows Criollo and Trinitario cacao and ferments its own beans. What we have seen, and what we are still documenting."
+  },
+  "es": {
+   "title": "Lachuá: cacao fino criollo y trinitario, Alta Verapaz | KAB EXPORT",
+   "description": "Ficha de campo del cacao fino de la región de Lachuá, Alta Verapaz, Guatemala: una empresa familiar q'eqchi' que cultiva cacao criollo y trinitario y fermenta su propio grano. Lo que hemos visto y lo que aún estamos documentando."
+  }
+ },
+ "strings": {
+  "en": {
+   "journey_eyebrow": "From flower to bean",
+   "journey_title": "How cacao is made in {name}",
+   "people_title": "The people behind this cacao",
+   "people_pending": "We are documenting the family enterprise, and the neighbouring growers whose cacao it buys, together with them. Profiles are published only with each family's consent, and each one will include:",
+   "people_fields": [
+    "Name, and how long they have grown cacao",
+    "Size of their plots",
+    "Number of trees, and which clones they grow",
+    "What they harvest in a typical season",
+    "In their own words: what the crop means for their family"
+   ],
+   "ask_btn": "Ask about this cacao",
+   "ask_param": "cacao",
+   "visit_text": "Buyers can visit {name} with us, walk the cacao plots and see how the beans are fermented and dried. Visits are arranged with the family in advance, at a time that suits them.",
+   "wa": "Field record of {name}, fine cacao from Alta Verapaz, Guatemala:"
+  },
+  "es": {
+   "journey_eyebrow": "De la flor al grano",
+   "journey_title": "Así se hace el cacao en {name}",
+   "people_title": "Las personas detrás de este cacao",
+   "people_pending": "Estamos documentando la empresa familiar, y a los productores vecinos a quienes compra cacao, junto con ellos. Los perfiles se publican solo con el consentimiento de cada familia, y cada uno incluirá:",
+   "people_fields": [
+    "Nombre, y desde cuándo cultivan cacao",
+    "Tamaño de sus parcelas",
+    "Número de árboles y qué clones cultivan",
+    "Lo que cosechan en una temporada normal",
+    "En sus palabras: lo que el cultivo significa para su familia"
+   ],
+   "ask_btn": "Preguntar por este cacao",
+   "ask_param": "cacao",
+   "visit_text": "Los compradores pueden visitar {name} con nosotros, recorrer los cacaotales y ver cómo se fermenta y se seca el grano. Las visitas se acuerdan con la familia por adelantado, cuando les convenga.",
+   "wa": "Ficha de campo de {name}, cacao fino de Alta Verapaz, Guatemala:"
+  }
+ },
+ "hero": {
+  "photo": "mazorcas-moradas",
+  "inset": "mazorca-abierta",
+  "people": "vivero",
+  "tagline": {
+   "en": "Fine cacao from the Lachuá lowlands",
+   "es": "Cacao fino de las tierras bajas de Lachuá"
+  },
+  "lede": {
+   "en": "In the Lachuá region, a Q'eqchi' family enterprise grows Criollo and Trinitario cacao, harvests it by hand and ferments its own beans under a controlled protocol. This page shows what we have seen in their plots, and marks clearly what we are still documenting.",
+   "es": "En la región de Lachuá, una empresa familiar q'eqchi' cultiva cacao criollo y trinitario, lo cosecha a mano y fermenta su propio grano con un protocolo controlado. Esta página muestra lo que hemos visto en sus cacaotales y marca con claridad lo que aún estamos documentando."
+  }
+ },
+ "ledger": [
+  {
+   "status": "seen",
+   "photo": "diversidad-de-mazorcas",
+   "title": {
+    "en": "Many kinds of pod, side by side",
+    "es": "Mazorcas de muchos tipos, lado a lado"
+   },
+   "text": {
+    "en": "Red, purple, yellow and green pods come off the same plots: the trees are not a single uniform variety.",
+    "es": "De los mismos cacaotales salen mazorcas rojas, moradas, amarillas y verdes: los árboles son de material diverso, no de una sola variedad."
+   }
+  },
+  {
+   "status": "seen",
+   "photo": "clon-rotulado",
+   "title": {
+    "en": "Clones identified in the field",
+    "es": "Clones identificados en el campo"
+   },
+   "text": {
+    "en": "Trees carry a label with the code of their clone, so the planting material of each tree can be traced.",
+    "es": "Los árboles llevan un rótulo con el código de su clon, de modo que el material de cada árbol puede rastrearse."
+   }
+  },
+  {
+   "status": "seen",
+   "photo": "plantacion-joven",
+   "title": {
+    "en": "New plantings under shade",
+    "es": "Siembras nuevas bajo sombra"
+   },
+   "text": {
+    "en": "Young cacao grows among plantain, which shades it while the trees establish.",
+    "es": "El cacao joven crece entre plátano, que le da sombra mientras los árboles se establecen."
+   }
+  },
+  {
+   "status": "seen",
+   "photo": "vivero",
+   "title": {
+    "en": "Seedlings raised in a nursery",
+    "es": "Plantas criadas en vivero"
+   },
+   "text": {
+    "en": "Cacao seedlings are raised in bags before they go to the field.",
+    "es": "Las plantas de cacao se crían en bolsa antes de pasar al campo."
+   }
+  },
+  {
+   "status": "seen",
+   "photo": "cosecha-en-el-cacaotal",
+   "title": {
+    "en": "Harvested by hand",
+    "es": "Cosechado a mano"
+   },
+   "text": {
+    "en": "Ripe pods are cut by hand and gathered in piles inside the plot.",
+    "es": "Las mazorcas maduras se cortan a mano y se reúnen en pilas dentro del cacaotal."
+   }
+  },
+  {
+   "status": "seen",
+   "photo": "cascaras",
+   "title": {
+    "en": "Pods opened at the farm",
+    "es": "Mazorcas abiertas en la finca"
+   },
+   "text": {
+    "en": "The beans are taken out at the farm. The husks stay in the plot, where they return to the soil.",
+    "es": "El grano se saca en la finca. Las cáscaras se quedan en el cacaotal y regresan al suelo."
+   }
+  },
+  {
+   "status": "pending",
+   "title": {
+    "en": "Criollo and Trinitario material",
+    "es": "Material criollo y trinitario"
+   },
+   "text": {
+    "en": "The family grows Criollo and Trinitario cacao. We will publish the record of the clones planted in each block.",
+    "es": "La familia cultiva cacao criollo y trinitario. Publicaremos el registro de los clones sembrados en cada lote."
+   }
+  },
+  {
+   "status": "pending",
+   "title": {
+    "en": "Controlled fermentation",
+    "es": "Fermentación controlada"
+   },
+   "text": {
+    "en": "The beans are fermented under a controlled protocol. We will publish photographs of the fermentation and the record of each batch.",
+    "es": "El grano se fermenta con un protocolo controlado. Publicaremos fotografías de la fermentación y el registro de cada tanda."
+   }
+  },
+  {
+   "status": "pending",
+   "title": {
+    "en": "Bean quality",
+    "es": "Calidad del grano"
+   },
+   "text": {
+    "en": "Cut test, bean count and flavour profile of each lot, measured on samples.",
+    "es": "Prueba de corte, conteo de granos y perfil de sabor de cada lote, medidos en muestras."
+   }
+  },
+  {
+   "status": "pending",
+   "title": {
+    "en": "Producers, plots and capacity",
+    "es": "Productores, parcelas y capacidad"
+   },
+   "text": {
+    "en": "We are documenting the family enterprise, its plots and what it produces, with their consent.",
+    "es": "Estamos documentando la empresa familiar, sus parcelas y lo que produce, con su consentimiento."
+   }
+  }
+ ],
+ "journey": [
+  {
+   "photo": "flor-de-cacao",
+   "title": {
+    "en": "Flower",
+    "es": "Flor"
+   },
+   "text": {
+    "en": "Cacao flowers grow straight from the trunk and the older branches.",
+    "es": "La flor del cacao sale directo del tronco y de las ramas viejas."
+   }
+  },
+  {
+   "photo": "mazorcas-en-el-tronco",
+   "title": {
+    "en": "Pods",
+    "es": "Mazorcas"
+   },
+   "text": {
+    "en": "Each pollinated flower becomes a pod that hangs from the trunk.",
+    "es": "Cada flor polinizada se vuelve una mazorca que cuelga del tronco."
+   }
+  },
+  {
+   "photo": "mazorcas-moradas",
+   "title": {
+    "en": "Ripeness",
+    "es": "Madurez"
+   },
+   "text": {
+    "en": "As it ripens, the pod changes colour: red, purple or yellow, depending on the tree.",
+    "es": "Al madurar la mazorca cambia de color: roja, morada o amarilla, según el árbol."
+   }
+  },
+  {
+   "photo": "cosecha-en-el-cacaotal",
+   "title": {
+    "en": "Harvest",
+    "es": "Cosecha"
+   },
+   "text": {
+    "en": "Ripe pods are cut by hand and gathered in the plot.",
+    "es": "Las mazorcas maduras se cortan a mano y se reúnen en el cacaotal."
+   }
+  },
+  {
+   "photo": "mazorca-abierta",
+   "title": {
+    "en": "Opening",
+    "es": "Apertura"
+   },
+   "text": {
+    "en": "Inside, the beans sit wrapped in white, sweet pulp.",
+    "es": "Por dentro, el grano viene envuelto en una pulpa blanca y dulce."
+   }
+  },
+  {
+   "photo": "granos-por-mazorca",
+   "title": {
+    "en": "Fresh beans",
+    "es": "Grano fresco"
+   },
+   "text": {
+    "en": "Fresh beans, laid out pod by pod. Next come fermentation and drying, which we are documenting.",
+    "es": "Grano fresco, ordenado mazorca por mazorca. Después vienen la fermentación y el secado, que estamos documentando."
+   }
+  }
+ ],
+ "figures": [
+  {
+   "label": {
+    "en": "Main crop",
+    "es": "Cultivo principal"
+   },
+   "value": {
+    "en": "Fine cacao",
+    "es": "Cacao fino"
+   },
+   "note": {
+    "en": "Theobroma cacao",
+    "es": "Theobroma cacao"
+   }
+  },
+  {
+   "label": {
+    "en": "Genetic material",
+    "es": "Material genético"
+   },
+   "value": {
+    "en": "Criollo and Trinitario",
+    "es": "Criollo y trinitario"
+   },
+   "note": {
+    "en": "As grown by the family",
+    "es": "Según lo que cultiva la familia"
+   }
+  },
+  {
+   "label": {
+    "en": "Processing",
+    "es": "Proceso"
+   },
+   "value": {
+    "en": "Fermented and dried at origin",
+    "es": "Fermentado y secado en origen"
+   },
+   "note": {
+    "en": "Controlled fermentation protocol",
+    "es": "Protocolo de fermentación controlada"
+   }
+  },
+  {
+   "label": {
+    "en": "Area under cacao",
+    "es": "Área de cacao"
+   },
+   "value": null
+  },
+  {
+   "label": {
+    "en": "Cacao trees",
+    "es": "Árboles de cacao"
+   },
+   "value": null
+  },
+  {
+   "label": {
+    "en": "Dry cacao per season",
+    "es": "Cacao seco por temporada"
+   },
+   "value": null
+  },
+  {
+   "label": {
+    "en": "Fermentation capacity per batch",
+    "es": "Capacidad de fermentación por tanda"
+   },
+   "value": null
+  },
+  {
+   "label": {
+    "en": "Harvest months",
+    "es": "Meses de cosecha"
+   },
+   "value": null
+  }
+ ],
+ "producers": [],
+ "gallery": [
+  "mazorcas-moradas",
+  "diversidad-de-mazorcas",
+  "mazorca-en-mano",
+  "mazorca-abierta",
+  "granos-por-mazorca",
+  "pila-de-cosecha",
+  "arbol-cargado",
+  "flores-en-el-tronco",
+  "hileras",
+  "tallo-cargado",
+  "mazorcas-verdes-cosechadas",
+  "ramas-con-mazorcas",
+  "tronco-con-mazorcas",
+  "poda-y-hojarasca",
+  "cascaras",
+  "plantacion-joven"
+ ],
+ "captions": {
+  "mazorcas-moradas": {
+   "en": "Ripe purple pods hanging from the trunk.",
+   "es": "Mazorcas moradas maduras colgando del tronco."
+  },
+  "diversidad-de-mazorcas": {
+   "en": "Harvested pods of many colours and shapes.",
+   "es": "Mazorcas cosechadas de muchos colores y formas."
+  },
+  "mazorca-abierta": {
+   "en": "A red pod cut open: beans in white pulp.",
+   "es": "Mazorca roja abierta: el grano en su pulpa blanca."
+  },
+  "mazorca-en-mano": {
+   "en": "A ripe pod, just cut.",
+   "es": "Una mazorca madura, recién cortada."
+  },
+  "granos-por-mazorca": {
+   "en": "Fresh beans from two pods, laid out pod by pod.",
+   "es": "Grano fresco de dos mazorcas, ordenado por mazorca."
+  },
+  "cascaras": {
+   "en": "Empty husks after the beans are taken out.",
+   "es": "Cáscaras vacías después de sacar el grano."
+  },
+  "cosecha-en-el-cacaotal": {
+   "en": "Harvest day: ripe pods gathered in the plot.",
+   "es": "Día de cosecha: mazorcas maduras reunidas en el cacaotal."
+  },
+  "pila-de-cosecha": {
+   "en": "A pile of harvested pods under the trees.",
+   "es": "Pila de mazorcas cosechadas bajo los árboles."
+  },
+  "mazorcas-verdes-cosechadas": {
+   "en": "Harvested pods waiting in the row.",
+   "es": "Mazorcas cosechadas esperando en la hilera."
+  },
+  "poda-y-hojarasca": {
+   "en": "Leaves and prunings left on the ground as mulch.",
+   "es": "Hojas y poda que quedan en el suelo como cobertura."
+  },
+  "arbol-cargado": {
+   "en": "A tree loaded with young pods.",
+   "es": "Un árbol cargado de mazorcas tiernas."
+  },
+  "mazorcas-en-el-tronco": {
+   "en": "Pods growing straight from the trunk.",
+   "es": "Mazorcas que salen directo del tronco."
+  },
+  "tronco-con-mazorcas": {
+   "en": "Pods along the trunk and main branches.",
+   "es": "Mazorcas a lo largo del tronco y las ramas principales."
+  },
+  "tallo-cargado": {
+   "en": "A heavily bearing stem.",
+   "es": "Un tallo muy cargado."
+  },
+  "ramas-con-mazorcas": {
+   "en": "Green pods among the branches.",
+   "es": "Mazorcas verdes entre las ramas."
+  },
+  "clon-rotulado": {
+   "en": "A tree labelled with its clone code.",
+   "es": "Un árbol rotulado con el código de su clon."
+  },
+  "plantacion-joven": {
+   "en": "Young cacao under plantain shade.",
+   "es": "Cacao joven bajo sombra de plátano."
+  },
+  "vivero": {
+   "en": "Cacao seedlings in the nursery, with new copper leaves.",
+   "es": "Plantas de cacao en vivero, con hojas nuevas color cobre."
+  },
+  "flor-de-cacao": {
+   "en": "Cacao flowers on the trunk.",
+   "es": "Flores de cacao en el tronco."
+  },
+  "flores-en-el-tronco": {
+   "en": "A cluster of flowers on an old branch.",
+   "es": "Un ramillete de flores en una rama vieja."
+  },
+  "hileras": {
+   "en": "Rows of cacao trees with ripe pods.",
+   "es": "Hileras de árboles de cacao con mazorcas maduras."
+  }
+ }
+}

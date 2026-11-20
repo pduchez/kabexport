@@ -59,6 +59,7 @@ L = {
         "visit_text": "Buyers can visit {name} with us, walk the plots and see the drying facility. Visits are arranged with the community in advance, at a time that suits them.",
         "visit_btn": "Plan a visit",
         "ask_btn": "Ask about this cardamom",
+        "ask_param": "cardamomo",
         "foot_record": "Field record of {name}",
         "foot_photos": "Photographs taken on site, {record}.",
         "foot_updated": "Page updated",
@@ -112,6 +113,7 @@ L = {
         "visit_text": "Los compradores pueden visitar {name} con nosotros, recorrer las parcelas y conocer el beneficio. Las visitas se acuerdan antes con la comunidad, en el momento que mejor le quede.",
         "visit_btn": "Planificar una visita",
         "ask_btn": "Preguntar por este cardamomo",
+        "ask_param": "cardamomo",
         "foot_record": "Ficha de campo de {name}",
         "foot_photos": "Fotografías tomadas en la comunidad, {record}.",
         "foot_updated": "Página actualizada el",
@@ -302,8 +304,14 @@ def _date(lang, iso):
     return f"{month} {d}, {y}" if lang == "en" else f"{d} de {month} de {y}"
 
 
+def strings(c, lang):
+    """Textos de la ficha. Cada comunidad puede ajustar los suyos en `strings` (p. ej. el
+    cultivo: «cardamomo» es el valor de fábrica, Lachuá habla de cacao)."""
+    return {**L[lang], **c.get("strings", {}).get(lang, {})}
+
+
 def _share(c, lang, url):
-    t = L[lang]
+    t = strings(c, lang)
     msg = t["wa"].format(name=c["name"]) + " " + url
     title = c["meta"][lang]["title"]
     links = [
@@ -320,7 +328,7 @@ def _share(c, lang, url):
 
 
 def body(key, c, lang, url, crumbs, url_of, founder_url, visits_html=""):
-    t = L[lang]
+    t = strings(c, lang)
     name = escape(c["name"])
     record = c["field_record"][lang]
     seen = sum(1 for e in c["ledger"] if e["status"] == "seen")
@@ -407,7 +415,7 @@ def body(key, c, lang, url, crumbs, url_of, founder_url, visits_html=""):
         fields = "".join(f"<li>{escape(x)}</li>" for x in t["people_fields"])
         people_inner = f"""<div class="people-pending">
       <div>{_status(lang, "pending")}<p>{t["people_pending"]}</p><ul class="checklist">{fields}</ul></div>
-      <figure>{_img(c, "renuevo", lang, sizes="(max-width: 900px) 100vw, 420px")}</figure>
+      <figure>{_img(c, c["hero"].get("people", "renuevo"), lang, sizes="(max-width: 900px) 100vw, 420px")}</figure>
     </div>"""
     people = f"""<section class="block tight">
   <div class="wrap">
@@ -433,7 +441,7 @@ def body(key, c, lang, url, crumbs, url_of, founder_url, visits_html=""):
   <div class="wrap">
     <div class="cta">
       <div><h2>{t["visit_title"]}</h2><p>{t["visit_text"].format(name=name)}</p></div>
-      <div class="hero-cta"><a class="btn btn-honey" href="{url_of("contact")}?p=visita">{t["visit_btn"]}</a><a class="btn btn-ghost" href="{url_of("contact")}?p=cardamomo">{t["ask_btn"]}</a></div>
+      <div class="hero-cta"><a class="btn btn-honey" href="{url_of("contact")}?p=visita">{t["visit_btn"]}</a><a class="btn btn-ghost" href="{url_of("contact")}?p={t["ask_param"]}">{t["ask_btn"]}</a></div>
     </div>
     <footer class="fieldnote">
       <b>{t["foot_record"].format(name=name)}</b>
@@ -444,7 +452,7 @@ def body(key, c, lang, url, crumbs, url_of, founder_url, visits_html=""):
   </div>
 </section>"""
 
-    return "\n\n".join(x for x in [hero, location(c, lang), ledger, journey, figures, people, visits_html, gallery, visit] if x)
+    return "\n\n".join(x for x in [hero, location(c, lang, c.get("location_facts", {}).get(lang)), ledger, journey, figures, people, visits_html, gallery, visit] if x)
 
 
 def cards(communities, lang, soon=()):
